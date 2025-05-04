@@ -19,11 +19,11 @@ public class SearchData implements InMatchSearchCategory, GeneralSearchCategory{
 
     @Override
     public List<String> getIgnoreTags() {
-        return List.of();
+        return null;
     }
 
     @Override
     public List<HeroFilter> getSearchHeroes() {
-        return List.of();
+        return null;
     }
 }

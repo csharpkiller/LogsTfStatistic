@@ -1,6 +1,6 @@
 package org.example.search.info;
 
-import org.example.search.info.DTO.MatchDTO;
+import org.example.search.info.DTO.matches.list.MatchDTO;
 
 import java.util.ArrayList;
 import java.util.List;

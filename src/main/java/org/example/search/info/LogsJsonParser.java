@@ -20,7 +20,8 @@ public class LogsJsonParser {
     // сказано так лучше, потокобезопасно для чтения и записи
     private static final ObjectMapper objectMapperForMatchList = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // если нет в data class нужных полей, то игнорим и заполняем те что есть
-    private static final ObjectMapper objectMapperForInsideMatch = new ObjectMapper();
+    private static final ObjectMapper objectMapperForInsideMatch = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // ладно добавил на всякий случай
 
     public ParseResult<List<MatchDTO>> getMatchList(String json){
         List<MatchDTO> matchDTOList;
@@ -40,8 +41,8 @@ public class LogsJsonParser {
             matchInfo = objectMapperForInsideMatch.readValue(json, MatchRoot.class);
             return new ParseResult<MatchRoot>(matchInfo, false);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Ошибка при парсинге JSON", e);
-            //return new ParseResult<MatchRoot>(new MatchRoot(), true);
+            //throw new RuntimeException("Ошибка при парсинге JSON", e);
+            return new ParseResult<MatchRoot>(new MatchRoot(), true);
         }
     }
 }

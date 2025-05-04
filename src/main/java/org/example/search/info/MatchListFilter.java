@@ -5,8 +5,8 @@ import java.util.List;
 /**
  * Фильтры которые мы накладываем на список матчей, до захода внутрь матча
  */
-public interface GeneralSearchCategory {
+public interface MatchListFilter {
     SearchRangeType getSearchRangeType();
-    Boolean isServerMeSearch();
+    Boolean isOnlyServerMeSearch();
     List<String> getIgnoreTags();
 }

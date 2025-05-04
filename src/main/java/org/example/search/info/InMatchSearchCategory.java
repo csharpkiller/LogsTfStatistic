@@ -3,5 +3,8 @@ package org.example.search.info;
 import java.util.List;
 
 public interface InMatchSearchCategory {
-    List<HeroFilter> getSearchHeroes();
+    String getPlayerId();
+    List<GameHero> getSearchHeroes();
+    Integer getCount();
+    List<GameMode> getGameModes();
 }

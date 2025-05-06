@@ -1,8 +1,7 @@
 package org.example.search.info;
 
 /**
- * Персонаж, либо все персонажи,
- * либо набор персонажей (scout + soldier) - скорее всего не будет реализовано (на будущее)
+ * Персонаж
  */
 public enum GameHero {
     SCOUT("scout"),
@@ -13,7 +12,8 @@ public enum GameHero {
     ENJIE("engineer"),
     MEDIC("medic"),
     SNIPER("sniper"),
-    SPY("spy");
+    SPY("spy"),
+    NULL("null"); // TODO StreamApi
 
     public final String label;
     public static GameHero valueOfLabel(String label) {
@@ -22,7 +22,7 @@ public enum GameHero {
                 return e;
             }
         }
-        return null;
+        return NULL;
     }
     private GameHero(String label) {
         this.label = label;

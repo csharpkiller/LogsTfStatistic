@@ -16,6 +16,12 @@ import java.net.URL;
  */
 public class JsonFetcher {
 
+    /**
+     * Возвращает Json по запросу
+     * TODO сделать обертку над String? JsonObject с полем Str
+     * @param apiUrl
+     * @return
+     */
     public String getJsonFromUrl(String apiUrl) {
         int maxRedirects = 5;
         int redirectCount = 0;

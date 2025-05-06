@@ -6,5 +6,4 @@ public interface InMatchSearchCategory {
     String getPlayerId();
     List<GameHero> getSearchHeroes();
     Integer getCount();
-    List<GameMode> getGameModes();
 }

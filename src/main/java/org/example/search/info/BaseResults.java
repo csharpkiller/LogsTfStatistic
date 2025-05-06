@@ -5,5 +5,6 @@ public interface BaseResults {
     Integer getDeaths();
     Integer getAssists();
     String getMap();
-    Boolean isWin();
+    GameResult isWin();
+    GameHero getGameHero();
 }

@@ -3,7 +3,7 @@ package org.example.search.info;
 import java.util.List;
 
 /**
- * DataClass, критерии по которым мы будем искать, фильтры
+ * DataClass, критерии по которым мы будем искать, фильтры1
  */
 public class SearchData implements InMatchSearchCategory, MatchListFilter {
     private final String playerId;
@@ -31,7 +31,7 @@ public class SearchData implements InMatchSearchCategory, MatchListFilter {
 
     @Override
     public List<GameHero> getSearchHeroes() {
-        return getSearchHeroes();
+        return searchHeroes;
     }
 
     @Override

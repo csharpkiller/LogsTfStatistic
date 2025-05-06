@@ -9,4 +9,5 @@ public interface MatchListFilter {
     SearchRangeType getSearchRangeType();
     Boolean isOnlyServerMeSearch();
     List<String> getIgnoreTags();
+    List<GameMode> getGameModes();
 }

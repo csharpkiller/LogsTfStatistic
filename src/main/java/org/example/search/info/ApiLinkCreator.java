@@ -3,6 +3,9 @@ package org.example.search.info;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Генерация API URL
+ */
 public class ApiLinkCreator {
     private static final String BASE_URL = "http://logs.tf/api/v1/log"; //будет выдавать все логи
     private final Map<String, String> parameters = new LinkedHashMap<>();

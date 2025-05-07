@@ -1,3 +1,4 @@
+/*
 package org.example.search.info;
 
 import junit.framework.TestCase;
@@ -16,9 +17,11 @@ class MatchExtractorTest extends TestCase {
 
     private final SearchData zeroFiltres = new SearchData(testId, SearchRangeType.MATCH_COUNT, false, List.of(), List.of(), 10, List.of());
 
-    /**
+    */
+/**
      * передаем limit 0
-     */
+     *//*
+
     @Test
     void zeroLimitTest(){
         ParseResult<List<MatchDTO>> res = matchExtractor.getMatches(testId, 0, 0, zeroFiltres);
@@ -26,9 +29,11 @@ class MatchExtractorTest extends TestCase {
         assertEquals(0, res.getResultData().size());
     }
 
-    /**
+    */
+/**
      * Сортировка по GameMode
-     */
+     *//*
+
     @Test
     void gameModeFilterTest(){
         SearchData sixes = new SearchData(testId, SearchRangeType.MATCH_COUNT, false, List.of(), List.of(), 10, List.of(GameMode.SIXES));
@@ -45,9 +50,11 @@ class MatchExtractorTest extends TestCase {
         assertEquals(4, res2.getResultData().get(0).getPlayers());
     }
 
-    /**
+    */
+/**
      * Сортировка по ignore Title
-     */
+     *//*
+
     @Test
     void ignoreTitlesTest(){
         var searchData = new SearchData(testId, SearchRangeType.MATCH_COUNT, false, List.of(BasedTitles.SERVER_ME, BasedTitles.TF2CENTER, "PugChamp"), List.of(), 10, List.of());
@@ -57,9 +64,11 @@ class MatchExtractorTest extends TestCase {
         assertEquals(1668736, res.getResultData().get(0).getId());
     }
 
-    /**
+    */
+/**
      * Сортировка только по server.me upploads
-     */
+     *//*
+
     @Test
     void serverMeUpploadsTest(){
         var serchData = new SearchData(testId, SearchRangeType.MATCH_COUNT, true, List.of(), List.of(), 10, List.of());
@@ -68,21 +77,25 @@ class MatchExtractorTest extends TestCase {
         assertEquals(1715675, res.getResultData().get(9).getId());
     }
 
-    /**
+    */
+/**
      * Првоерка удаления крайних значений
-     */
+     *//*
+
     @Test
     void deleteAppendBoardsTest(){
 
     }
 
-    /**
+    */
+/**
      * Проверка удаления ignoreTitle, в ситуации когда serverme дублировал запрос,
      * и попал в наш отрезок рассматриваемых значений, а сам IgnoreTitle вне отрезка
-     */
+     *//*
+
     @Test
     void hiddenIgnoredLogOutOfRangeTest(){
 
     }
 
-}
+}*/

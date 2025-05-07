@@ -34,12 +34,9 @@ public class App
                 10,
                 List.of(GameMode.SIXES)
         );
-        MatchExtractor matchExtractor = new MatchExtractor();
-        var e = matchExtractor.getMatches(searchData.getPlayerId(), 0, 10, searchData);
-        System.out.println("done");
 
-        DataExtractor dataExtractor = new DataExtractor();
-        List<PlayerResultData> playerResultData = dataExtractor.getPlayerResults(searchData);
-        System.out.printf("done 2");
+        Service service = new Service();
+        var res = service.getPlayerResults(searchData);
+        System.out.println("sad");
     }
 }

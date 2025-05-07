@@ -2,15 +2,10 @@ package org.example.search.info;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
+
 /**
  * Класс для получения данных по API запросу
  */
@@ -20,7 +15,7 @@ public class JsonFetcher {
      * Возвращает Json по запросу
      * TODO сделать обертку над String? JsonObject с полем Str
      * @param apiUrl
-     * @return
+     * @return json
      */
     public String getJsonFromUrl(String apiUrl) {
         int maxRedirects = 5;

@@ -3,59 +3,53 @@ package org.example.search.info;
 import java.util.List;
 
 /**
- * DataClass, критерии по которым мы будем искать, фильтры1
+ * DataClass, user input
+ * критерии по которым мы будем искать, фильтры
  */
-public class SearchData implements InMatchSearchCategory, MatchListFilter {
-    private final String playerId;
-    private final SearchRangeType searchRangeType;
-    private final Boolean isServerMeSearch;
-    private final List<String> ignoreTags;
-    private final List<GameHero> searchHeroes;
-    private final Integer count;
-    private final List<GameMode> gameModes;
+public class SearchData{
+    private final String playerId; // id игрока для которого нужно вернуть результат
+    private final SearchRangeType searchRangeType; // тип поиска по range (сейчас только кол-во матчей)
+    private final Boolean isServerMeSearch; // матчи только с upploads with serveme?
+    private final List<String> ignoreTitles; // список игнорируемых Title's
+    private final List<GameHero> searchHeroes; // список персонажей по которым венруть результат
+    private final Integer count; // кол-во матчей которое нужно вернуть
+    private final List<GameMode> gameModes; // игровые режимы которые нужно вернуть
 
-    public SearchData(String playerId, SearchRangeType searchRangeType, Boolean isServerMeSearch, List<String> ignoreTags, List<GameHero> searchHeroes, Integer count, List<GameMode> gameModes) {
+    public SearchData(String playerId, SearchRangeType searchRangeType, Boolean isServerMeSearch, List<String> ignoreTitles, List<GameHero> searchHeroes, Integer count, List<GameMode> gameModes) {
         this.playerId = playerId;
         this.searchRangeType = searchRangeType;
         this.isServerMeSearch = isServerMeSearch;
-        this.ignoreTags = ignoreTags;
+        this.ignoreTitles = ignoreTitles;
         this.searchHeroes = searchHeroes;
         this.count = count;
         this.gameModes = gameModes;
     }
 
-    @Override
     public String getPlayerId() {
         return playerId;
     }
 
-    @Override
     public List<GameHero> getSearchHeroes() {
         return searchHeroes;
     }
 
-    @Override
     public Integer getCount() {
         return count;
     }
 
-    @Override
     public List<GameMode> getGameModes() {
         return gameModes;
     }
 
-    @Override
     public SearchRangeType getSearchRangeType() {
         return searchRangeType;
     }
 
-    @Override
     public Boolean isOnlyServerMeSearch() {
         return isServerMeSearch;
     }
 
-    @Override
-    public List<String> getIgnoreTags() {
-        return ignoreTags;
+    public List<String> getIgnoreTitles() {
+        return ignoreTitles;
     }
 }

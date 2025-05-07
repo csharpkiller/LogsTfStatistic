@@ -2,15 +2,17 @@ package org.example.search.info;
 
 import org.example.search.info.DTO.ParseResult;
 import org.example.search.info.DTO.matches.list.MatchDTO;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * Класс предназначенный на извлечение списка id матчей
+ * Класс предназначенный на извлечение списка id матчей с примененными фильтрами.
  */
 public class MatchExtractor {
 
-    private final Integer dataError;
+    private final Integer dataError; // погрешность времени
+
     private final ApiLinkCreator apiLinkCreator;
     private final JsonFetcher jsonFetcher;
     private final LogsJsonParser logsJsonParser;
@@ -24,18 +26,17 @@ public class MatchExtractor {
 
     /**
      * Возвращает отсортированный список матчей
-     * @param ID api value
-     * @param offset api value
-     * @param limit api value
+     * @param offset смещение, logs.tf api value
+     * @param limit количество матчей, logs.tf api value
      * @param searchCategory фильтры
      * @return контейнер ParseResult, с в случае ошибки isMissingData = true
      */
-    public ParseResult<List<MatchDTO>> getMatches(String ID, Integer offset, Integer limit, MatchListFilter searchCategory) {
+    public ParseResult<List<MatchDTO>> getFilteredMatches(Integer offset, Integer limit, @NotNull SearchData searchCategory) {
         apiLinkCreator.clear();
 
         switch (searchCategory.getSearchRangeType()) {
             case MATCH_COUNT -> {
-                ParseResult<List<MatchDTO>> res = matchCountSearch(ID, offset, limit, searchCategory);
+                ParseResult<List<MatchDTO>> res = matchCountSearch(offset, limit, searchCategory);
 
                 if(!res.getMissingData()){
                     if(res.getResultData().size() > limit){
@@ -63,7 +64,15 @@ public class MatchExtractor {
         }
     }
 
-    private ParseResult<List<MatchDTO>> matchCountSearch(String ID, Integer offset, Integer limit, MatchListFilter searchCategory) {
+    /**
+     * Подгружает матчи и возвращает отфильтрованные
+     * @param offset смещение, logs.tf api value
+     * @param limit количество матчей, logs.tf api value
+     * @param searchCategory фильтры
+     * @return контейнер с результатом
+     */
+    @NotNull
+    private ParseResult<List<MatchDTO>> matchCountSearch(Integer offset, Integer limit, SearchData searchCategory) {
         // расширение диапозона, для сравнения крайних матчей
         int supOffset = 0;
         int supLimit = limit + 1;
@@ -71,9 +80,10 @@ public class MatchExtractor {
             supOffset = offset - 1;
         }
 
-        String apiLink = apiLinkCreator.setPlayer(ID).setOffset(supOffset).setLimit(supLimit).build();
-        if (searchCategory.isOnlyServerMeSearch() && searchCategory.getIgnoreTags().isEmpty()) {
-            apiLink = apiLinkCreator.setTitle(BasedTitles.SERVER_ME).setLimit(limit).setOffset(offset).build();
+        String apiLink = apiLinkCreator.setPlayer(searchCategory.getPlayerId()).setOffset(supOffset).setLimit(supLimit).build();
+
+        if (searchCategory.isOnlyServerMeSearch() && searchCategory.getIgnoreTitles().isEmpty()) {
+            apiLink = apiLinkCreator.setTitle(BasedTitles.SERVE_ME).setLimit(limit).setOffset(offset).build();
         }
 
         ParseResult<List<MatchDTO>> loadedMatches = loadData(apiLink);
@@ -81,28 +91,36 @@ public class MatchExtractor {
             return loadedMatches;
         }
 
-        List<MatchDTO> filteredData = titleFilter(searchCategory.getIgnoreTags(), loadedMatches.getResultData());
+        List<MatchDTO> filteredData = titleFilter(searchCategory.getIgnoreTitles(), loadedMatches.getResultData());
 
         if(searchCategory.isOnlyServerMeSearch()){
-            filteredData = servermeFilter(filteredData);
+            filteredData = getOnlyServemeMatches(filteredData);
         }
 
         filteredData = gameModeFilter(filteredData, searchCategory.getGameModes());
         return new ParseResult<List<MatchDTO>>(filteredData, false);
     }
 
-    private ParseResult<List<MatchDTO>> loadData(String api) {
+    /**
+     * Подгружает данные через запрос к api
+     * @param apiLink запрос
+     * @return контейнер с результатом
+     */
+    private ParseResult<List<MatchDTO>> loadData(String apiLink) {
         String jsonData;
-        jsonData = jsonFetcher.getJsonFromUrl(api);
-
-        ParseResult<List<MatchDTO>> parseResult = logsJsonParser.getMatchList(jsonData);
-        return parseResult;
+        jsonData = jsonFetcher.getJsonFromUrl(apiLink);
+        return logsJsonParser.parseToMatchList(jsonData);
     }
 
-    private List<MatchDTO> titleFilter(List<String> titlesToIgnore, List<MatchDTO> unfilteredMatches) {
+    /**
+     * Фильтрует список матчей по Title учитывая, что матч может быть дублирован под другим Title и его тоже нужно удалить.
+     * @param titlesToIgnore title которые нужно отсечь
+     * @param unfilteredMatches неотфильтрованный список матчей
+     * @return отфильтрованный список матчей
+     */
+    private List<MatchDTO> titleFilter(List<String> titlesToIgnore, @NotNull List<MatchDTO> unfilteredMatches) {
 
         List<MatchDTO> ignoredMatchResults = unfilteredMatches.stream()
-                //.filter(log -> titlesToIgnore.contains(log.getTitle())) TODO refactor
                 .filter(log -> titlesToIgnore.stream().anyMatch(
                         ignoreTitle -> log.getTitle().toLowerCase().contains(ignoreTitle.toLowerCase())
                         ))
@@ -126,16 +144,25 @@ public class MatchExtractor {
                 .toList();
     }
 
-    private List<MatchDTO> servermeFilter(List<MatchDTO> unfilteredMatches){
-
+    /**
+     * Возвращает только матчи загруженные с serveme
+     * @param unfilteredMatches неотфильтрованный список мачтей
+     * @return матчи загруженные с хоста serveme
+     */
+    private List<MatchDTO> getOnlyServemeMatches(@NotNull List<MatchDTO> unfilteredMatches){
         return unfilteredMatches.stream()
-                .filter(log -> log.getTitle().contains(BasedTitles.SERVER_ME)).toList();
+                .filter(log -> log.getTitle().contains(BasedTitles.SERVE_ME)).toList();
     }
 
-    private List<MatchDTO> gameModeFilter(List<MatchDTO> unfilteredMatches, List<GameMode> gameModesToFilter){
+    /**
+     * Фильтрует матчи по режиму игры
+     * @param unfilteredMatches неотфильтрованный список мачтей
+     * @param gameModesToFilter список искомых игровых режимов
+     * @return отфильтрованный список матчей
+     */
+    private List<MatchDTO> gameModeFilter(@NotNull List<MatchDTO> unfilteredMatches, List<GameMode> gameModesToFilter){
         return unfilteredMatches.stream()
                 .filter(log -> {
-
                     int countOfPlayers = log.getPlayers();
                     return gameModesToFilter.isEmpty() || gameModesToFilter.contains(GameMode.valueOfPlayersCount(countOfPlayers));
                 }).toList();

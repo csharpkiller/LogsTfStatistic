@@ -1,53 +1,53 @@
 package org.example.search.info.DTO;
 
-import org.example.search.info.DTO.inside.match.ClassStats;
-import org.example.search.info.DTO.inside.match.MatchRoot;
-import org.example.search.info.DTO.inside.match.Player;
+import org.example.search.info.DTO.inside.match.ClassStatsDTO;
+import org.example.search.info.DTO.inside.match.MatchRootDTO;
+import org.example.search.info.DTO.inside.match.PlayerDTO;
 import org.example.search.info.GameHero;
 import org.example.search.info.GameResult;
 
 /**
- * Утилита для получения данных из MatchRoot
+ * Утилита для получения данных из MatchRootDTO
  */
 public class MatchResultUtils {
 
     /**
      * Получить персонажа на котором дольше всего играли во время матча.
-     * @param classStats
+     * @param classStatDTOS
      * @return
      */
-    public GameHero getMainPlayerHeroInMatch(ClassStats[] classStats){
+    public GameHero getMainPlayerHeroInMatch(ClassStatsDTO[] classStatDTOS){
         GameHero gameHero = null;
         int timePlayed = 0;
 
-        for (ClassStats classStat : classStats) {
+        for (ClassStatsDTO classStat : classStatDTOS) {
             int currentTime = classStat.getTotal_time();
             if (currentTime > timePlayed) {
                 timePlayed = currentTime;
-                gameHero = GameHero.valueOfLabel(classStat.getType());
+                gameHero = GameHero.valueOfLabel(classStat.getHero_str());
             }
         }
         return gameHero;
     }
 
-    public GameHero getMainPlayerHeroInMatch(MatchRoot matchRoot, Player player){
+    public GameHero getMainPlayerHeroInMatch(MatchRootDTO matchRootDTO, PlayerDTO playerDTO){
         GameHero gameHero = null;
         int timePlayed = 0;
-        ClassStats[] classStats = player.getClass_stats();
-        for (ClassStats classStat : classStats) {
+        ClassStatsDTO[] classStatDTOS = playerDTO.getClass_stats();
+        for (ClassStatsDTO classStat : classStatDTOS) {
             int currentTime = classStat.getTotal_time();
             if (currentTime > timePlayed) {
                 timePlayed = currentTime;
-                gameHero = GameHero.valueOfLabel(classStat.getType());
+                gameHero = GameHero.valueOfLabel(classStat.getHero_str());
             }
         }
         return gameHero;
     }
 
-    public GameResult playerWin(MatchRoot matchRoot, Player player) {
-        int redScore = matchRoot.getTeams().getRed().getScore();
-        int blueScore = matchRoot.getTeams().getBlue().getScore();
-        boolean isPlayerInRedTeam = "Red".equals(player.getTeam());
+    public GameResult playerWin(MatchRootDTO matchRootDTO, PlayerDTO playerDTO) {
+        int redScore = matchRootDTO.getTeams().getRed().getScore();
+        int blueScore = matchRootDTO.getTeams().getBlue().getScore();
+        boolean isPlayerInRedTeam = "Red".equals(playerDTO.getTeam());
 
         if (redScore == blueScore) {
             return GameResult.DRAW;

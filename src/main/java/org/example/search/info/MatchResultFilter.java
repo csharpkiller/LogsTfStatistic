@@ -1,8 +1,8 @@
 package org.example.search.info;
 
 import org.example.search.info.DTO.MatchResultUtils;
-import org.example.search.info.DTO.inside.match.MatchRoot;
-import org.example.search.info.DTO.inside.match.Player;
+import org.example.search.info.DTO.inside.match.MatchRootDTO;
+import org.example.search.info.DTO.inside.match.PlayerDTO;
 import org.example.search.info.objectwrappers.SteamID;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +25,7 @@ public class MatchResultFilter {
      * @param searchData user input (фильтры)
      * @return отфильтрованный список результатов матчей
      */
-    public List<MatchRoot> getFilteredMatchResults(List<MatchRoot> unfilteredMatchResults, @NotNull SearchData searchData){
+    public List<MatchRootDTO> getFilteredMatchResults(List<MatchRootDTO> unfilteredMatchResults, @NotNull SearchData searchData){
         if(!searchData.getPlayerId().isValidId()){
             System.out.println("input steamId is not valid");
             return List.of();
@@ -35,17 +35,17 @@ public class MatchResultFilter {
 
     /**
      * Фильтрация списка результатов матчей по героям
-     * @param matchRoots список результатов матча
+     * @param matchRootDTOS список результатов матча
      * @param steamID id игрока, для которого фильтруем
      * @param searchedGameHeroes список персонажей, по которым ищем
      * @return отфильтрованный список
      */
-    private List<MatchRoot> filterMatchByHero(@NotNull List<MatchRoot> matchRoots, SteamID steamID, List<GameHero> searchedGameHeroes){
-        return matchRoots.stream()
+    private List<MatchRootDTO> filterMatchByHero(@NotNull List<MatchRootDTO> matchRootDTOS, SteamID steamID, List<GameHero> searchedGameHeroes){
+        return matchRootDTOS.stream()
                 .filter(root -> {
-                    Player player = root.getPlayers().getPlayerMap().get(steamID.getShortSteamID());
+                    PlayerDTO playerDTO = root.getPlayers().getPlayerMap().get(steamID.getShortSteamID());
                     try {
-                        GameHero gameHero = matchResultUtils.getMainPlayerHeroInMatch(root, player);
+                        GameHero gameHero = matchResultUtils.getMainPlayerHeroInMatch(root, playerDTO);
                         return searchedGameHeroes.contains(gameHero);
                     }catch (Exception e){
                         return false;

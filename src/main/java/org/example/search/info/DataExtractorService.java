@@ -1,7 +1,7 @@
 package org.example.search.info;
 
 import org.example.search.info.DTO.ParseResult;
-import org.example.search.info.DTO.inside.match.MatchRoot;
+import org.example.search.info.DTO.inside.match.MatchRootDTO;
 import org.example.search.info.DTO.matches.list.MatchDTO;
 import org.jetbrains.annotations.NotNull;
 
@@ -98,12 +98,12 @@ public class DataExtractorService {
 
             List<MatchDTO> filteredListOfMatches = parseResultMatchDTOList.getResultData();
 
-            /*List<MatchRoot> unfilteredListOfMatchResults = fillMatchResultsList(filteredListOfMatches);
-            List<MatchRoot> listOfMatchResults = matchResultFilter.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
+            /*List<MatchRootDTO> unfilteredListOfMatchResults = fillMatchResultsList(filteredListOfMatches);
+            List<MatchRootDTO> listOfMatchResults = matchResultFilter.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
             if(!searchData.getSearchHeroes().isEmpty()){
                 listOfMatchResults = matchResultFilter.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
             }*/
-            List<MatchRoot> listOfMatchResults = fillMatchResultsList(filteredListOfMatches);
+            List<MatchRootDTO> listOfMatchResults = fillMatchResultsList(filteredListOfMatches);
             if(!searchData.getSearchHeroes().isEmpty()){
                 listOfMatchResults = matchResultFilter.getFilteredMatchResults(listOfMatchResults, searchData);
             }
@@ -132,17 +132,17 @@ public class DataExtractorService {
      * @return список результатов матчей
      */
     @NotNull
-    private List<MatchRoot> fillMatchResultsList(@NotNull List<MatchDTO> listOfMatches){
-        List<MatchRoot> matchRootList = new ArrayList<>();
+    private List<MatchRootDTO> fillMatchResultsList(@NotNull List<MatchDTO> listOfMatches){
+        List<MatchRootDTO> matchRootDTOList = new ArrayList<>();
         for(MatchDTO match : listOfMatches){
             String apiUrl = apiLinkCreator.createLinkForInsideMatch(String.valueOf(match.getId()));
-            ParseResult<MatchRoot> parseResult = logsJsonParser.parseToMatchResult(jsonFetcher.getJsonFromUrl(apiUrl));
+            ParseResult<MatchRootDTO> parseResult = logsJsonParser.parseToMatchResult(jsonFetcher.getJsonFromUrl(apiUrl));
             if(!parseResult.getMissingData()){
-                matchRootList.add(parseResult.getResultData());
+                matchRootDTOList.add(parseResult.getResultData());
             }else {
                 generalMissingMatchesAfterParse.add(match);
             }
         }
-        return matchRootList;
+        return matchRootDTOList;
     }
 }

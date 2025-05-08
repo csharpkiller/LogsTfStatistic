@@ -3,7 +3,7 @@ package org.example.search.info;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.search.info.DTO.inside.match.MatchRoot;
+import org.example.search.info.DTO.inside.match.MatchRootDTO;
 import org.example.search.info.DTO.matches.list.JsonRootMatch;
 import org.example.search.info.DTO.matches.list.MatchDTO;
 import org.example.search.info.DTO.ParseResult;
@@ -43,13 +43,13 @@ public class LogsJsonParser {
      * @param json json String
      * @return Json Obj
      */
-    public ParseResult<MatchRoot> parseToMatchResult(Json json){
-        MatchRoot matchInfo;
+    public ParseResult<MatchRootDTO> parseToMatchResult(Json json){
+        MatchRootDTO matchInfo;
         try {
-            matchInfo = objectMapperForInsideMatch.readValue(json.getValue(), MatchRoot.class);
+            matchInfo = objectMapperForInsideMatch.readValue(json.getValue(), MatchRootDTO.class);
             return new ParseResult<>(matchInfo, false);
-        } catch (JsonProcessingException e) {
-            return new ParseResult<>(new MatchRoot(), true);
+        } catch (Exception e) {
+            return new ParseResult<>(new MatchRootDTO(), true);
         }
     }
 }

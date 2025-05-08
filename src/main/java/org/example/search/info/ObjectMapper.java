@@ -1,8 +1,8 @@
 package org.example.search.info;
 
 import org.example.search.info.DTO.MatchResultUtils;
-import org.example.search.info.DTO.inside.match.MatchRoot;
-import org.example.search.info.DTO.inside.match.Player;
+import org.example.search.info.DTO.inside.match.MatchRootDTO;
+import org.example.search.info.DTO.inside.match.PlayerDTO;
 import org.example.search.info.objectwrappers.SteamID;
 
 import java.util.ArrayList;
@@ -21,24 +21,24 @@ public class ObjectMapper {
     /**
      * Конвертация результатов матчей в результаты игрока
      * @param steamId id игрока для которого получаем результат
-     * @param matchRootList результаты матчей
+     * @param matchRootDTOList результаты матчей
      * @return результаты игрока
      */
-    public List<BasedPlayerResults> convertMatchRootToPlayerResultData(SteamID steamId, List<MatchRoot> matchRootList){
+    public List<BasedPlayerResults> convertMatchRootToPlayerResultData(SteamID steamId, List<MatchRootDTO> matchRootDTOList){
         List<BasedPlayerResults> basedPlayerResultData = new ArrayList<>();
-        for(MatchRoot matchRoot : matchRootList){
+        for(MatchRootDTO matchRootDTO : matchRootDTOList){
 
-            String nickName_r = matchRoot.getNames().get(steamId.getShortSteamID());
-            Player player = matchRoot.getPlayers().getPlayerMap().get(steamId.getShortSteamID());
+            String nickName_r = matchRootDTO.getNames().get(steamId.getShortSteamID());
+            PlayerDTO playerDTO = matchRootDTO.getPlayers().getPlayerMap().get(steamId.getShortSteamID());
 
-            GameHero gameHero_r = matchResultUtils.getMainPlayerHeroInMatch(matchRoot, player);
+            GameHero gameHero_r = matchResultUtils.getMainPlayerHeroInMatch(matchRootDTO, playerDTO);
 
-            String map_r = matchRoot.getInfo().getMap();
+            String map_r = matchRootDTO.getInfo().getMap();
 
-            GameResult gameResult_r = matchResultUtils.playerWin(matchRoot, player);
+            GameResult gameResult_r = matchResultUtils.playerWin(matchRootDTO, playerDTO);
 
             basedPlayerResultData.add(new BasedPlayerResults(
-                    steamId.getSteamID64(), nickName_r, gameHero_r,player.getKills(), player.getDeaths(), player.getAssists(), map_r, gameResult_r
+                    steamId.getSteamID64(), nickName_r, gameHero_r, playerDTO.getKills(), playerDTO.getDeaths(), playerDTO.getAssists(), map_r, gameResult_r
             ));
         }
         return basedPlayerResultData;

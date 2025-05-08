@@ -2,7 +2,10 @@ package org.example.search.info.DTO.inside.match;
 
 import java.util.Map;
 
-public class MatchRoot {
+/**
+ * Корневой объект Json'a, содержащий все сервисы
+ */
+public class MatchRootDTO {
 
     private boolean success;
     private boolean success_open = true;
@@ -10,47 +13,47 @@ public class MatchRoot {
     private int version;
     private boolean version_open = true;
 
-    private Info info;
+    private InfoDTO infoDTO;
     private boolean info_open = true;
 
-    private Teams teams;
+    private TeamsDTO teamsDTO;
     private boolean teams_open = true;
 
     private int length;
     private boolean length_open = true;
 
-    private PlayerMap players;
+    private PlayerMapDTO players;
     private boolean players_open = true;
 
     private Map<String, String> names;
     private boolean names_open = true;
 
-    private HealSpread healspread;
+    private HealSpreadDTO healspread;
     private boolean healspread_open = true;
 
-    private ClassKills classkills;
+    private ClassKillsDTO classkills;
     private boolean classkills_open = true;
 
-    private ClassDeaths classdeaths;
+    private ClassDeathsDTO classdeaths;
     private boolean classdeaths_open = true;
 
-    private ClassKillAssists classkillassists;
+    private ClassKillAssistsDTO classkillassists;
     private boolean classkillassists_open = true;
 
-    private Chat[] chat;
+    private ChatDTO[] chatDTO;
     private boolean chat_open = true;
 
-    private Round[] rounds;
+    private RoundDTO[] roundDTOS;
     private boolean rounds_open = true;
 
-    private KillStreak[] killstreaks;
+    private KillStreakDTO[] killstreaks;
     private boolean killstreaks_open = true;
 
-    public KillStreak[] getKillstreaks() {
+    public KillStreakDTO[] getKillstreaks() {
         return killstreaks;
     }
 
-    public void setKillstreaks(KillStreak[] killstreaks) {
+    public void setKillstreaks(KillStreakDTO[] killstreaks) {
         if (killstreaks_open) {
             this.killstreaks = killstreaks;
             killstreaks_open = false;
@@ -73,18 +76,18 @@ public class MatchRoot {
         }
     }
 
-    public Info getInfo() { return info; }
-    public void setInfo(Info info) {
+    public InfoDTO getInfo() { return infoDTO; }
+    public void setInfo(InfoDTO infoDTO) {
         if (info_open) {
-            this.info = info;
+            this.infoDTO = infoDTO;
             info_open = false;
         }
     }
 
-    public Teams getTeams() { return teams; }
-    public void setTeams(Teams teams) {
+    public TeamsDTO getTeams() { return teamsDTO; }
+    public void setTeams(TeamsDTO teamsDTO) {
         if (teams_open) {
-            this.teams = teams;
+            this.teamsDTO = teamsDTO;
             teams_open = false;
         }
     }
@@ -97,8 +100,8 @@ public class MatchRoot {
         }
     }
 
-    public PlayerMap getPlayers() { return players; }
-    public void setPlayers(PlayerMap players) {
+    public PlayerMapDTO getPlayers() { return players; }
+    public void setPlayers(PlayerMapDTO players) {
         if (players_open) {
             this.players = players;
             players_open = false;
@@ -113,50 +116,50 @@ public class MatchRoot {
         }
     }
 
-    public HealSpread getHealspread() { return healspread; }
-    public void setHealspread(HealSpread healspread) {
+    public HealSpreadDTO getHealspread() { return healspread; }
+    public void setHealspread(HealSpreadDTO healspread) {
         if (healspread_open) {
             this.healspread = healspread;
             healspread_open = false;
         }
     }
 
-    public ClassKills getClasskills() { return classkills; }
-    public void setClasskills(ClassKills classkills) {
+    public ClassKillsDTO getClasskills() { return classkills; }
+    public void setClasskills(ClassKillsDTO classkills) {
         if (classkills_open) {
             this.classkills = classkills;
             classkills_open = false;
         }
     }
 
-    public ClassDeaths getClassdeaths() { return classdeaths; }
-    public void setClassdeaths(ClassDeaths classdeaths) {
+    public ClassDeathsDTO getClassdeaths() { return classdeaths; }
+    public void setClassdeaths(ClassDeathsDTO classdeaths) {
         if (classdeaths_open) {
             this.classdeaths = classdeaths;
             classdeaths_open = false;
         }
     }
 
-    public ClassKillAssists getClasskillassists() { return classkillassists; }
-    public void setClasskillassists(ClassKillAssists classkillassists) {
+    public ClassKillAssistsDTO getClasskillassists() { return classkillassists; }
+    public void setClasskillassists(ClassKillAssistsDTO classkillassists) {
         if (classkillassists_open) {
             this.classkillassists = classkillassists;
             classkillassists_open = false;
         }
     }
 
-    public Chat[] getChat() { return chat; }
-    public void setChat(Chat[] chat) {
+    public ChatDTO[] getChat() { return chatDTO; }
+    public void setChat(ChatDTO[] chatDTO) {
         if (chat_open) {
-            this.chat = chat;
+            this.chatDTO = chatDTO;
             chat_open = false;
         }
     }
 
-    public Round[] getRounds() { return rounds; }
-    public void setRounds(Round[] rounds) {
+    public RoundDTO[] getRounds() { return roundDTOS; }
+    public void setRounds(RoundDTO[] roundDTOS) {
         if (rounds_open) {
-            this.rounds = rounds;
+            this.roundDTOS = roundDTOS;
             rounds_open = false;
         }
     }

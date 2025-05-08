@@ -1,5 +1,7 @@
 package org.example.search.info;
 
+import org.example.search.info.objectwrappers.SteamID;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,8 +29,8 @@ public class ApiLinkCreator {
         return this;
     }
 
-    public ApiLinkCreator setPlayer(String player) {
-        parameters.put("player", player);
+    public ApiLinkCreator setPlayer(SteamID player) {
+        parameters.put("player", player.getSteamID64());
         return this;
     }
 

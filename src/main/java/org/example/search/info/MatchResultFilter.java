@@ -1,20 +1,21 @@
 package org.example.search.info;
 
 import org.example.search.info.DTO.MatchResultUtils;
-import org.example.search.info.DTO.inside.match.ClassStats;
 import org.example.search.info.DTO.inside.match.MatchRoot;
 import org.example.search.info.DTO.inside.match.Player;
+import org.example.search.info.objectwrappers.SteamID;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class DataExtractor {
+/**
+ * Класс для фильтрации результатов матча
+ */
+public class MatchResultFilter {
 
-    private final SteamIdConverter steamIdConverter;
     private final MatchResultUtils matchResultUtils;
 
-    public DataExtractor(){
-        steamIdConverter = new SteamIdConverter();
+    public MatchResultFilter(){
         matchResultUtils = new MatchResultUtils();
     }
 
@@ -25,28 +26,30 @@ public class DataExtractor {
      * @return отфильтрованный список результатов матчей
      */
     public List<MatchRoot> getFilteredMatchResults(List<MatchRoot> unfilteredMatchResults, @NotNull SearchData searchData){
+        if(!searchData.getPlayerId().isValidId()){
+            System.out.println("input steamId is not valid");
+            return List.of();
+        }
         return filterMatchByHero(unfilteredMatchResults, searchData.getPlayerId(), searchData.getSearchHeroes());
     }
 
     /**
      * Фильтрация списка результатов матчей по героям
      * @param matchRoots список результатов матча
-     * @param searchedPlayerID id игрока, для которого фильтруем
+     * @param steamID id игрока, для которого фильтруем
      * @param searchedGameHeroes список персонажей, по которым ищем
      * @return отфильтрованный список
      */
-    private List<MatchRoot> filterMatchByHero(@NotNull List<MatchRoot> matchRoots, String searchedPlayerID, List<GameHero> searchedGameHeroes){
-        String shortId = steamIdConverter.convertId64ToShortId(searchedPlayerID);
+    private List<MatchRoot> filterMatchByHero(@NotNull List<MatchRoot> matchRoots, SteamID steamID, List<GameHero> searchedGameHeroes){
         return matchRoots.stream()
                 .filter(root -> {
-                    //TODO
-                    ClassStats[] classStats = root.getPlayers().getPlayerMap().get(shortId).getClass_stats();
-                    //GameHero gameHero = matchResultUtils.getMainHeroInGame(classStats);
-
-                    Player player = root.getPlayers().getPlayerMap().get(shortId);
-                    GameHero gameHero = matchResultUtils.getMainHeroInGame(root, player);
-
-                    return searchedGameHeroes.contains(gameHero);
+                    Player player = root.getPlayers().getPlayerMap().get(steamID.getShortSteamID());
+                    try {
+                        GameHero gameHero = matchResultUtils.getMainPlayerHeroInMatch(root, player);
+                        return searchedGameHeroes.contains(gameHero);
+                    }catch (Exception e){
+                        return false;
+                    }
                 })
                 .toList();
     }

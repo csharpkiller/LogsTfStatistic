@@ -9,16 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Service {
-    private final DataExtractor dataExtractor;
-    private final MatchExtractor matchExtractor;
+/**
+ * Сервис для получения результатов матчей по запросу пользователя
+ */
+public class DataExtractorService {
+    private final MatchResultFilter matchResultFilter;
+    private final MatchExtractorService matchExtractorService;
     private final ObjectMapper objectMapper;
     private final JsonFetcher jsonFetcher;
     private final ApiLinkCreator apiLinkCreator;
     private final LogsJsonParser logsJsonParser;
 
     /**
-     * @countOfMatchesToParse
+     * countOfMatchesToParse
      * Кратко:
      *  Кол-во матчей которое мы будем получать при запросе к API logs.tf
      * Подробнее:
@@ -33,7 +36,7 @@ public class Service {
     private final Integer countOfMatchesToParse;
 
     /**
-     * @countOfPossibleErrors
+     * countOfPossibleErrors
      * Кратко:
      *  Кол-во допустимых ошибок парсинга списка матчей
      * Подробнее:
@@ -53,9 +56,9 @@ public class Service {
      */
     private List<MatchDTO> generalMissingMatchesAfterParse;
 
-    public Service(){
-        dataExtractor = new DataExtractor();
-        matchExtractor = new MatchExtractor();
+    public DataExtractorService(){
+        matchResultFilter = new MatchResultFilter();
+        matchExtractorService = new MatchExtractorService();
         objectMapper = new ObjectMapper();
         generalMissingMatchesAfterParse = List.of();
         jsonFetcher = new JsonFetcher();
@@ -71,7 +74,11 @@ public class Service {
      * @return список результатов
      */
     public List<BasedPlayerResults> getPlayerResults(@NotNull SearchData searchData){
-        List<BasedPlayerResults> resultData = new ArrayList<BasedPlayerResults>();
+        if(!searchData.getPlayerId().isValidId()){
+            System.out.println("input steam id is not valid");
+            return List.of();
+        }
+        List<BasedPlayerResults> resultData = new ArrayList<>();
         generalMissingMatchesAfterParse = new ArrayList<>();
 
         int start = -countOfMatchesToParse;
@@ -82,7 +89,7 @@ public class Service {
             start+= countOfMatchesToParse;
             if(start >= deep) break; // TODO to delete?
 
-            ParseResult<List<MatchDTO>> parseResultMatchDTOList = matchExtractor.getFilteredMatches(start, countOfMatchesToParse, searchData);
+            ParseResult<List<MatchDTO>> parseResultMatchDTOList = matchExtractorService.getFilteredMatches(start, countOfMatchesToParse, searchData);
 
             if(parseResultMatchDTOList.getMissingData()){
                 caughtErrors++;
@@ -90,11 +97,15 @@ public class Service {
             }
 
             List<MatchDTO> filteredListOfMatches = parseResultMatchDTOList.getResultData();
-            List<MatchRoot> unfilteredListOfMatchResults = fillMatchResultsList(filteredListOfMatches);
-            List<MatchRoot> listOfMatchResults = dataExtractor.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
 
+            /*List<MatchRoot> unfilteredListOfMatchResults = fillMatchResultsList(filteredListOfMatches);
+            List<MatchRoot> listOfMatchResults = matchResultFilter.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
             if(!searchData.getSearchHeroes().isEmpty()){
-                listOfMatchResults = dataExtractor.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
+                listOfMatchResults = matchResultFilter.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
+            }*/
+            List<MatchRoot> listOfMatchResults = fillMatchResultsList(filteredListOfMatches);
+            if(!searchData.getSearchHeroes().isEmpty()){
+                listOfMatchResults = matchResultFilter.getFilteredMatchResults(listOfMatchResults, searchData);
             }
 
             List<BasedPlayerResults> basedPlayerResultData = objectMapper.convertMatchRootToPlayerResultData(searchData.getPlayerId(), listOfMatchResults);
@@ -125,7 +136,6 @@ public class Service {
         List<MatchRoot> matchRootList = new ArrayList<>();
         for(MatchDTO match : listOfMatches){
             String apiUrl = apiLinkCreator.createLinkForInsideMatch(String.valueOf(match.getId()));
-            //ParseResult<MatchRoot> parseResult = logsJsonParser.getMatchResultsList(apiUrl); //TODO вот тут возникла проблема, что Json в формате String, и можно подскользнуться
             ParseResult<MatchRoot> parseResult = logsJsonParser.parseToMatchResult(jsonFetcher.getJsonFromUrl(apiUrl));
             if(!parseResult.getMissingData()){
                 matchRootList.add(parseResult.getResultData());

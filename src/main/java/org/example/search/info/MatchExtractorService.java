@@ -2,6 +2,7 @@ package org.example.search.info;
 
 import org.example.search.info.DTO.ParseResult;
 import org.example.search.info.DTO.matches.list.MatchDTO;
+import org.example.search.info.objectwrappers.Json;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Класс предназначенный на извлечение списка id матчей с примененными фильтрами.
  */
-public class MatchExtractor {
+public class MatchExtractorService {
 
     private final Integer dataError; // погрешность времени
 
@@ -17,7 +18,7 @@ public class MatchExtractor {
     private final JsonFetcher jsonFetcher;
     private final LogsJsonParser logsJsonParser;
 
-    public MatchExtractor() {
+    public MatchExtractorService() {
         dataError = 120;
         apiLinkCreator = new ApiLinkCreator();
         jsonFetcher = new JsonFetcher();
@@ -33,6 +34,10 @@ public class MatchExtractor {
      */
     public ParseResult<List<MatchDTO>> getFilteredMatches(Integer offset, Integer limit, @NotNull SearchData searchCategory) {
         apiLinkCreator.clear();
+        if(!searchCategory.getPlayerId().isValidId()){
+            System.out.println("steam id is not valid");
+            return new ParseResult<>(List.of(), false);
+        }
 
         switch (searchCategory.getSearchRangeType()) {
             case MATCH_COUNT -> {
@@ -98,7 +103,7 @@ public class MatchExtractor {
         }
 
         filteredData = gameModeFilter(filteredData, searchCategory.getGameModes());
-        return new ParseResult<List<MatchDTO>>(filteredData, false);
+        return new ParseResult<>(filteredData, false);
     }
 
     /**
@@ -107,8 +112,7 @@ public class MatchExtractor {
      * @return контейнер с результатом
      */
     private ParseResult<List<MatchDTO>> loadData(String apiLink) {
-        String jsonData;
-        jsonData = jsonFetcher.getJsonFromUrl(apiLink);
+        Json jsonData = jsonFetcher.getJsonFromUrl(apiLink);
         return logsJsonParser.parseToMatchList(jsonData);
     }
 

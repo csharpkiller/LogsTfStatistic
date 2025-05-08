@@ -1,9 +1,11 @@
 package org.example.search.info;
 
+import org.example.Printable;
+
 /**
  * DataClass, интересующая нас информация из матча
  */
-public class BasedPlayerResults {
+public class BasedPlayerResults implements Printable {
     private final String steamId; // id игрока
     private final String nickNameFromMatch; // никнейм игрока в матче
     private final GameHero gameHero; // персонаж на котором играл
@@ -54,5 +56,20 @@ public class BasedPlayerResults {
 
     public GameResult getIsWin() {
         return isWin;
+    }
+
+    @Override
+    public void print() {
+        System.out.printf(
+                "Игрок: %s (%s), Герой: %s, Фраги: %d, Смерти: %d, Ассисты: %d, Карта: %s, Победа: %s%n",
+                this.nickNameFromMatch,
+                this.steamId,
+                this.gameHero,
+                this.kills,
+                this.deaths,
+                this.assists,
+                this.map,
+                this.isWin
+        );
     }
 }

@@ -7,6 +7,7 @@ import org.example.search.info.DTO.inside.match.MatchRoot;
 import org.example.search.info.DTO.matches.list.JsonRootMatch;
 import org.example.search.info.DTO.matches.list.MatchDTO;
 import org.example.search.info.DTO.ParseResult;
+import org.example.search.info.objectwrappers.Json;
 
 import java.util.List;
 
@@ -26,29 +27,29 @@ public class LogsJsonParser {
      * @param json json String
      * @return контейнер с json объектом и результатом парсинга.
      */
-    public ParseResult<List<MatchDTO>> parseToMatchList(String json){
+    public ParseResult<List<MatchDTO>> parseToMatchList(Json json){
         List<MatchDTO> matchDTOList;
         try {
-            JsonRootMatch root = objectMapperForMatchList.readValue(json, JsonRootMatch.class);
+            JsonRootMatch root = objectMapperForMatchList.readValue(json.getValue(), JsonRootMatch.class);
             matchDTOList =  root.getLogs();
-            return new ParseResult<List<MatchDTO>>(matchDTOList, false);
+            return new ParseResult<>(matchDTOList, false);
         } catch (JsonProcessingException e) {
-            return new ParseResult<List<MatchDTO>>(List.of(), true);
+            return new ParseResult<>(List.of(), true);
         }
     }
 
     /**
      * Парсит string json в объект Java
      * @param json json String
-     * @return
+     * @return Json Obj
      */
-    public ParseResult<MatchRoot> parseToMatchResult(String json){
+    public ParseResult<MatchRoot> parseToMatchResult(Json json){
         MatchRoot matchInfo;
         try {
-            matchInfo = objectMapperForInsideMatch.readValue(json, MatchRoot.class);
-            return new ParseResult<MatchRoot>(matchInfo, false);
+            matchInfo = objectMapperForInsideMatch.readValue(json.getValue(), MatchRoot.class);
+            return new ParseResult<>(matchInfo, false);
         } catch (JsonProcessingException e) {
-            return new ParseResult<MatchRoot>(new MatchRoot(), true);
+            return new ParseResult<>(new MatchRoot(), true);
         }
     }
 }

@@ -1,5 +1,7 @@
 package org.example.search.info;
 
+import org.example.search.info.objectwrappers.SteamID;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  * критерии по которым мы будем искать, фильтры
  */
 public class SearchData{
-    private final String playerId; // id игрока для которого нужно вернуть результат
+    private final SteamID playerId; // id игрока для которого нужно вернуть результат
     private final SearchRangeType searchRangeType; // тип поиска по range (сейчас только кол-во матчей)
     private final Boolean isServerMeSearch; // матчи только с upploads with serveme?
     private final List<String> ignoreTitles; // список игнорируемых Title's
@@ -15,7 +17,7 @@ public class SearchData{
     private final Integer count; // кол-во матчей которое нужно вернуть
     private final List<GameMode> gameModes; // игровые режимы которые нужно вернуть
 
-    public SearchData(String playerId, SearchRangeType searchRangeType, Boolean isServerMeSearch, List<String> ignoreTitles, List<GameHero> searchHeroes, Integer count, List<GameMode> gameModes) {
+    public SearchData(SteamID playerId, SearchRangeType searchRangeType, Boolean isServerMeSearch, List<String> ignoreTitles, List<GameHero> searchHeroes, Integer count, List<GameMode> gameModes) {
         this.playerId = playerId;
         this.searchRangeType = searchRangeType;
         this.isServerMeSearch = isServerMeSearch;
@@ -25,7 +27,7 @@ public class SearchData{
         this.gameModes = gameModes;
     }
 
-    public String getPlayerId() {
+    public SteamID getPlayerId() {
         return playerId;
     }
 

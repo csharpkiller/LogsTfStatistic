@@ -16,7 +16,7 @@ public class MatchResultUtils {
      * @param classStats
      * @return
      */
-    public GameHero getMainHeroInGame(ClassStats[] classStats){
+    public GameHero getMainPlayerHeroInMatch(ClassStats[] classStats){
         GameHero gameHero = null;
         int timePlayed = 0;
 
@@ -30,7 +30,7 @@ public class MatchResultUtils {
         return gameHero;
     }
 
-    public GameHero getMainHeroInGame(MatchRoot matchRoot, Player player){
+    public GameHero getMainPlayerHeroInMatch(MatchRoot matchRoot, Player player){
         GameHero gameHero = null;
         int timePlayed = 0;
         ClassStats[] classStats = player.getClass_stats();

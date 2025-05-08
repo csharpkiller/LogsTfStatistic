@@ -1,10 +1,13 @@
 package org.example.search.info;
 
+/**
+ * Игровой режим
+ */
 public enum GameMode {
     SIXES(12),
     HIGHLANDER(18),
     ULTIDUO_BBAL(4),
-    OTHER(-1); // TODO добавил для streamAPI, мб как-то по-другмоу можно решить
+    NULL(-1); // TODO добавил для streamAPI, мб как-то по-другмоу можно решить
 
     public final Integer playersCountInGameMode;
 
@@ -14,7 +17,7 @@ public enum GameMode {
                 return e;
             }
         }
-        return OTHER;
+        return NULL;
     }
 
     GameMode(Integer playersCountInGameMode){

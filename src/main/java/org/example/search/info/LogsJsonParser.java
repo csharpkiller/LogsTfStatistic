@@ -3,12 +3,12 @@ package org.example.search.info;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.search.info.DTO.inside.match.MatchRoot;
+import org.example.search.info.DTO.inside.match.MatchRootDTO;
 import org.example.search.info.DTO.matches.list.JsonRootMatch;
 import org.example.search.info.DTO.matches.list.MatchDTO;
 import org.example.search.info.DTO.ParseResult;
+import org.example.search.info.objectwrappers.Json;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,32 +17,39 @@ import java.util.List;
  */
 public class LogsJsonParser {
 
-    // сказано так лучше, потокобезопасно для чтения и записи
     private static final ObjectMapper objectMapperForMatchList = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // если нет в data class нужных полей, то игнорим и заполняем те что есть
     private static final ObjectMapper objectMapperForInsideMatch = new ObjectMapper()
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // ладно добавил на всякий случай
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // same, на всякий случай
 
-    public ParseResult<List<MatchDTO>> getMatchList(String json){
+    /**
+     * Парсит string json в список матчей
+     * @param json json String
+     * @return контейнер с json объектом и результатом парсинга.
+     */
+    public ParseResult<List<MatchDTO>> parseToMatchList(Json json){
         List<MatchDTO> matchDTOList;
         try {
-            JsonRootMatch root = objectMapperForMatchList.readValue(json, JsonRootMatch.class);
+            JsonRootMatch root = objectMapperForMatchList.readValue(json.getValue(), JsonRootMatch.class);
             matchDTOList =  root.getLogs();
-            return new ParseResult<List<MatchDTO>>(matchDTOList, false);
+            return new ParseResult<>(matchDTOList, false);
         } catch (JsonProcessingException e) {
-            return new ParseResult<List<MatchDTO>>(new ArrayList<MatchDTO>(), true);
-            //throw new RuntimeException("Ошибка при парсинге JSON", e);
+            return new ParseResult<>(List.of(), true);
         }
     }
 
-    public ParseResult<MatchRoot> getMatchResultsList(String json){
-        MatchRoot matchInfo;
+    /**
+     * Парсит string json в объект Java
+     * @param json json String
+     * @return Json Obj
+     */
+    public ParseResult<MatchRootDTO> parseToMatchResult(Json json){
+        MatchRootDTO matchInfo;
         try {
-            matchInfo = objectMapperForInsideMatch.readValue(json, MatchRoot.class);
-            return new ParseResult<MatchRoot>(matchInfo, false);
-        } catch (JsonProcessingException e) {
-            //throw new RuntimeException("Ошибка при парсинге JSON", e);
-            return new ParseResult<MatchRoot>(new MatchRoot(), true);
+            matchInfo = objectMapperForInsideMatch.readValue(json.getValue(), MatchRootDTO.class);
+            return new ParseResult<>(matchInfo, false);
+        } catch (Exception e) {
+            return new ParseResult<>(new MatchRootDTO(), true);
         }
     }
 }

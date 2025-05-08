@@ -1,5 +1,7 @@
 package org.example.search.info;
 
+import org.example.search.info.objectwrappers.SteamID;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,12 +9,14 @@ import java.util.Map;
  * Генерация API URL
  */
 public class ApiLinkCreator {
-    private static final String BASE_URL = "http://logs.tf/api/v1/log"; //будет выдавать все логи
-    private final Map<String, String> parameters = new LinkedHashMap<>();
+
+    private static final String BASED_WORKED_API_LINK_FOR_MATCHES = "http://logs.tf/api/v1/log"; // logs.tf api link без добавочных параметров
+    private final Map<String, String> parameters = new LinkedHashMap<>(); // добавочные параметры для @BASED_WORKED_API_LINK_FOR_MATCHES
 
     public ApiLinkCreator setTitle(String title) {
         parameters.put("title", title);
         return this;
+
     }
 
     public ApiLinkCreator setMap(String map) {
@@ -25,8 +29,8 @@ public class ApiLinkCreator {
         return this;
     }
 
-    public ApiLinkCreator setPlayer(String player) {
-        parameters.put("player", player);
+    public ApiLinkCreator setPlayer(SteamID player) {
+        parameters.put("player", player.getSteamID64());
         return this;
     }
 
@@ -40,16 +44,24 @@ public class ApiLinkCreator {
         return this;
     }
 
+    /**
+     * Удалить все параметры для создания новой ссылки.
+     * @return ApiLinkCreator
+     */
     public ApiLinkCreator clear(){
         parameters.clear();
         return this;
     }
 
+    /**
+     * Собрать/создать ссылку для вывода списка матчей
+     * @return string logs.tf api link
+     */
     public String build() {
         if (parameters.isEmpty()) {
-            return BASE_URL;
+            return BASED_WORKED_API_LINK_FOR_MATCHES;
         }
-        StringBuilder sb = new StringBuilder(BASE_URL);
+        StringBuilder sb = new StringBuilder(BASED_WORKED_API_LINK_FOR_MATCHES);
         sb.append("?");
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
             sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
@@ -58,6 +70,11 @@ public class ApiLinkCreator {
         return sb.toString();
     }
 
+    /**
+     * Создать ссылку для вывода результата матча
+     * @param matchId id матча
+     * @return string logs.tf api link
+     */
     public String createLinkForInsideMatch(String matchId){
         return "http://logs.tf/api/v1/log/"+matchId;
     }

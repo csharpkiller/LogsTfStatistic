@@ -1,6 +1,6 @@
 package org.example.analys;
 
-import org.example.search.info.PlayerResultData;
+import org.example.search.info.BasedPlayerResults;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class AnalysisPlayerStatistic {
 
-    public PlayerStatisticData getPlayerStatistic(List<PlayerResultData> playerResultDataList){
+    public PlayerStatisticData getPlayerStatistic(List<BasedPlayerResults> basedPlayerResultsList){
         //TODO
         return null;
     }

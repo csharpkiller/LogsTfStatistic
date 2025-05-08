@@ -1,16 +1,13 @@
 package org.example.search.info;
 
+import org.example.search.info.objectwrappers.Json;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
+
 /**
  * Класс для получения данных по API запросу
  */
@@ -18,11 +15,10 @@ public class JsonFetcher {
 
     /**
      * Возвращает Json по запросу
-     * TODO сделать обертку над String? JsonObject с полем Str
-     * @param apiUrl
-     * @return
+     * @param apiUrl ссылка для запроса к logs.tf api
+     * @return json
      */
-    public String getJsonFromUrl(String apiUrl) {
+    public Json getJsonFromUrl(String apiUrl) {
         int maxRedirects = 5;
         int redirectCount = 0;
 
@@ -48,7 +44,7 @@ public class JsonFetcher {
 
                     reader.close();
                     connection.disconnect();
-                    return response.toString();
+                    return new Json(response.toString());
 
                 } else if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP ||
                         responseCode == HttpURLConnection.HTTP_MOVED_PERM ||

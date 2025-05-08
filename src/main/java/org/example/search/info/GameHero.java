@@ -24,7 +24,7 @@ public enum GameHero {
         }
         return NULL;
     }
-    private GameHero(String label) {
+    GameHero(String label) {
         this.label = label;
     }
 }

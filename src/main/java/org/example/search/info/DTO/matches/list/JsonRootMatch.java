@@ -13,7 +13,6 @@ import java.util.List;
  * Как вариант можно было бы полностью запарсить, но в данном случае это излишне (бесполезная инфа).
  */
 public class JsonRootMatch {
-    @JsonProperty("logs")
     private List<MatchDTO> logs;
     private boolean logs_open = true;
 
@@ -30,11 +29,4 @@ public class JsonRootMatch {
     public List<MatchDTO> getLogs() {
         return logs;
     }
-
-    /*public void setLogs(List<MatchDTO> logs) {
-        if(logs_open) {
-            this.logs = logs;
-            logs_open = false;
-        }
-    }*/
 }

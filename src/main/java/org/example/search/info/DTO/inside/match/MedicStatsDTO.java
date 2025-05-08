@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * длится примерно 6-8 секунд, быстрее если переключает на другого союзника.
  */
 public class MedicStatsDTO {
-    private final int advantages_lost; // Сколько раз умер медик когда у него был убер/или почти был
+    private final int advantages_lost; // Сколько раз умер медик когда у него был убер или почти был
     private final int biggest_advantage_lost; // Размер самого большого потерянного преимущества. Допустим умер с готовым убером 100% или с почти готовым 80%.
     private final int deaths_within_20s_after_uber; // Сколько раз умер союзник, на которого использовали убер, в течение 20 секунд после окончания.
     private final int avg_time_before_using; // Среднее кол-во времени которое ждал медик до использования убера, уже имея его.

@@ -70,11 +70,22 @@ class MatchExtractorServiceTest {
      * Получения данных по невалидному steam id
      */
     @Test
-    void nonvalidSteamId(){
+    void nonvalidSteamIdTest(){
         steamID = new SteamID("812");
         uppdateSearchData();
 
         var result = matchExtractorService.getFilteredMatches(0, 20, searchDataTest);
+        assertEquals(List.of(), result.getResultData());
+    }
+
+    /**
+     * Невалидный offset и limit
+     */
+    @Test
+    void nonvalidLimitTest(){
+        uppdateSearchData();
+
+        var result = matchExtractorService.getFilteredMatches(-5, -5, searchDataTest);
         assertEquals(List.of(), result.getResultData());
     }
 

@@ -68,6 +68,18 @@ class DataExtractorServiceTest {
     }
 
     /**
+     * Отрицательное число запрашиваемых матчей
+     */
+    @Test
+    void negativeCountOfMatchTest(){
+        count = -5;
+        uppdateSearchData();
+
+        var result = dataExtractorService.getPlayerResults(searchData);
+        assertEquals(List.of(), result);
+    }
+
+    /**
      * Число запрашиваемых матчей соответствует числу возвращаемых матчей
      * если это возможно
      */

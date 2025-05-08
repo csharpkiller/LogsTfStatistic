@@ -1,7 +1,7 @@
 package org.example.search.info;
 
 /**
- * Персонаж
+ * Персонажи
  */
 public enum GameHero {
     SCOUT("scout"),

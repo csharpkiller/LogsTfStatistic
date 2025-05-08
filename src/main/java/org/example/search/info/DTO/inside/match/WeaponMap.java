@@ -6,11 +6,20 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 
 import java.util.HashMap;
 
+/**
+ * Статистики оружия
+ */
 public class WeaponMap {
 
+    /**
+     * Ключ - название оружия, значение - статистика оружия
+     */
     private Map<String, Weapon> weapons = new HashMap<>();
-    private boolean weapons_open = true;
+    private boolean weapons_open = true; // lateinit realisation
 
+    /**
+     * Для парсинга
+     */
     @JsonAnySetter
     public void handleWeapon(String key, Weapon value) {
         weapons.put(key, value);

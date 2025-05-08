@@ -51,6 +51,9 @@ public class DataExtractorService {
      */
     private final Integer countOfPossibleErrors;
 
+    // сколько матчей мы можем рассмотреть
+    private final Integer countOfMaximumCheckMatches;
+
     /**
      * Хранилище матчей, в случае ошибки получения результата матча по id матча.
      */
@@ -66,6 +69,7 @@ public class DataExtractorService {
         logsJsonParser = new LogsJsonParser();
         countOfMatchesToParse = 50;
         countOfPossibleErrors = 3;
+        countOfMaximumCheckMatches = 5000;
     }
 
     /**
@@ -83,11 +87,11 @@ public class DataExtractorService {
 
         int start = -countOfMatchesToParse;
         int caughtErrors = 0;
-        int deep = 5000; // TODO to delete? можно в теории передавать сколько максимум запросов будем обрабатывать
+
 
         while (resultData.size() < searchData.getCount() && caughtErrors <= countOfPossibleErrors){
             start+= countOfMatchesToParse;
-            if(start >= deep) break; // TODO to delete?
+            if(start >= countOfMaximumCheckMatches) break;
 
             ParseResult<List<MatchDTO>> parseResultMatchDTOList = matchExtractorService.getFilteredMatches(start, countOfMatchesToParse, searchData);
 
@@ -97,12 +101,6 @@ public class DataExtractorService {
             }
 
             List<MatchDTO> filteredListOfMatches = parseResultMatchDTOList.getResultData();
-
-            /*List<MatchRootDTO> unfilteredListOfMatchResults = fillMatchResultsList(filteredListOfMatches);
-            List<MatchRootDTO> listOfMatchResults = matchResultFilter.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
-            if(!searchData.getSearchHeroes().isEmpty()){
-                listOfMatchResults = matchResultFilter.getFilteredMatchResults(unfilteredListOfMatchResults, searchData);
-            }*/
             List<MatchRootDTO> listOfMatchResults = fillMatchResultsList(filteredListOfMatches);
             if(!searchData.getSearchHeroes().isEmpty()){
                 listOfMatchResults = matchResultFilter.getFilteredMatchResults(listOfMatchResults, searchData);

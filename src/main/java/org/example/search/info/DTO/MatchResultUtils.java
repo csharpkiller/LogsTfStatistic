@@ -12,24 +12,11 @@ import org.example.search.info.GameResult;
 public class MatchResultUtils {
 
     /**
-     * Получить персонажа на котором дольше всего играли во время матча.
-     * @param classStatDTOS
-     * @return
+     * Вернуть Main Персонажа игрока (персонаж имеет максимальное кол-во времени за матч)
+     * @param matchRootDTO матч
+     * @param playerDTO игрок
+     * @return основной персонаж
      */
-    public GameHero getMainPlayerHeroInMatch(ClassStatsDTO[] classStatDTOS){
-        GameHero gameHero = null;
-        int timePlayed = 0;
-
-        for (ClassStatsDTO classStat : classStatDTOS) {
-            int currentTime = classStat.getTotal_time();
-            if (currentTime > timePlayed) {
-                timePlayed = currentTime;
-                gameHero = GameHero.valueOfLabel(classStat.getHero_str());
-            }
-        }
-        return gameHero;
-    }
-
     public GameHero getMainPlayerHeroInMatch(MatchRootDTO matchRootDTO, PlayerDTO playerDTO){
         GameHero gameHero = null;
         int timePlayed = 0;
@@ -44,6 +31,12 @@ public class MatchResultUtils {
         return gameHero;
     }
 
+    /**
+     * Результат матча для игрока, победил или нет
+     * @param matchRootDTO матч
+     * @param playerDTO игрок
+     * @return результат матча
+     */
     public GameResult playerWin(MatchRootDTO matchRootDTO, PlayerDTO playerDTO) {
         int redScore = matchRootDTO.getTeams().getRed().getScore();
         int blueScore = matchRootDTO.getTeams().getBlue().getScore();

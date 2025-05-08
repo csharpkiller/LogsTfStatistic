@@ -23,7 +23,11 @@ public class SearchData{
         this.isServerMeSearch = isServerMeSearch;
         this.ignoreTitles = ignoreTitles;
         this.searchHeroes = searchHeroes;
-        this.count = count;
+        if(count < 0){
+            this.count = 0;
+        }else {
+            this.count = count;
+        }
         this.gameModes = gameModes;
     }
 

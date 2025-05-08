@@ -1,7 +1,7 @@
 package org.example.search.info;
 
 /**
- * Игровой режим
+ * Игровой режимы
  */
 public enum GameMode {
     SIXES(12),

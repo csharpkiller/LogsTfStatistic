@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class KillStreakDTO {
     private final String steamid; // steam id игрока
     private final int streak; // кол-во убийств за одну жизнь
-    private final int time; // время, которое держался strak (до первой смерти)
+    private final int time; // время, которое держался streak (до первой смерти)
 
     public KillStreakDTO(
             @JsonProperty("steamid") String steamid,

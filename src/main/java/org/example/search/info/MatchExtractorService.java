@@ -124,28 +124,38 @@ public class MatchExtractorService {
      */
     private List<MatchDTO> titleFilter(List<String> titlesToIgnore, @NotNull List<MatchDTO> unfilteredMatches) {
 
-        List<MatchDTO> ignoredMatchResults = unfilteredMatches.stream()
+        List<MatchDTO> ignoredMatches = unfilteredMatches.stream()
                 .filter(log -> titlesToIgnore.stream().anyMatch(
                         ignoreTitle -> log.getTitle().toLowerCase().contains(ignoreTitle.toLowerCase())
                         ))
                 .toList();
 
         return unfilteredMatches.stream()
-                .filter(log -> {
-                    if (titlesToIgnore.contains(log.getTitle())) {
+                .filter(match -> {
+                    if (titlesToIgnore.contains(match.getTitle())) {
                         return false;
                     }
-                    for (MatchDTO ignoredLog : ignoredMatchResults) {
-                        if (Math.abs(log.getDate() - ignoredLog.getDate()) < dataError
-                                && log.getMap().equals(ignoredLog.getMap())
-                                && (log.getPlayers() == ignoredLog.getPlayers())
-                        ) {
+                    for (MatchDTO ignoredMatch : ignoredMatches) {
+                        if (isSameMatch(match, ignoredMatch))
+                        {
                             return false;
                         }
                     }
                     return true;
                 })
                 .toList();
+    }
+
+    /**
+     * Проверка на дубликат.
+     * @param match1 матч1
+     * @param match2 матч2
+     * @return матч1 дубликат матч2
+     */
+    private boolean isSameMatch(MatchDTO match1, MatchDTO match2){
+        return Math.abs(match1.getDate() - match2.getDate()) < dataError
+                && match1.getMap().equals(match2.getMap())
+                && (match1.getPlayers() == match2.getPlayers());
     }
 
     /**
@@ -160,7 +170,7 @@ public class MatchExtractorService {
 
     /**
      * Фильтрует матчи по режиму игры
-     * @param unfilteredMatches неотфильтрованный список мачтей
+     * @param unfilteredMatches неотфильтрованный список матчей
      * @param gameModesToFilter список искомых игровых режимов
      * @return отфильтрованный список матчей
      */

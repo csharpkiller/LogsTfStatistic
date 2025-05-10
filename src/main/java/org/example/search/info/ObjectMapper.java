@@ -37,9 +37,18 @@ public class ObjectMapper {
 
             GameResult gameResult_r = matchResultUtils.playerWin(matchRootDTO, playerDTO);
 
-            basedPlayerResultData.add(new BasedPlayerResults(
-                    steamId.getSteamID64(), nickName_r, gameHero_r, playerDTO.getKills(), playerDTO.getDeaths(), playerDTO.getAssists(), map_r, gameResult_r
-            ));
+            basedPlayerResultData.add(
+                    new BasedPlayerResults(
+                    steamId.getSteamID64(),
+                            nickName_r,
+                            gameHero_r,
+                            playerDTO.getKills(),
+                            playerDTO.getDeaths(),
+                            playerDTO.getAssists(),
+                            playerDTO.getDmg_real(),
+                            map_r,
+                            gameResult_r)
+                    );
         }
         return basedPlayerResultData;
     }

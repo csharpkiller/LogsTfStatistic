@@ -1,5 +1,7 @@
 package org.example.search.info;
 
+import java.util.Arrays;
+
 /**
  * Персонажи
  */
@@ -17,12 +19,10 @@ public enum GameHero {
 
     public final String label;
     public static GameHero valueOfLabel(String label) {
-        for (GameHero e : values()) {
-            if (e.label.equals(label)) {
-                return e;
-            }
-        }
-        return NULL;
+        return Arrays.stream(values())
+                .filter(hero -> hero.label.equals(label))
+                .findFirst()
+                .orElse(NULL);
     }
     GameHero(String label) {
         this.label = label;

@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.analys.Metric;
+import org.example.analys.AnalysisService;
 import org.example.search.info.*;
 import org.example.search.info.objectwrappers.SteamID;
 
@@ -28,14 +30,27 @@ public class ConsoleApp {
         while (true) {
             try {
                 SearchData searchData = buildSearchData();
-                if(!searchData.getPlayerId().isValidId()){
+                if (!searchData.getPlayerId().isValidId()) {
                     System.out.println("steam id is not valid");
-                }
-                else {
-                    List<BasedPlayerResults> results = service.getPlayerResults(searchData);
+                } else {
+                    startLoadingAnimation(); //Включаем анимацию
+
+                    List<PlayerMatchData> playerMatchData = service.getPlayerResults(searchData);
+
+                    stopLoadingAnimation(); //Останавливаем анимацию
+
+                    List<BasedPlayerResults> results = playerMatchData.stream()
+                            .map(PlayerMatchData::getBasedPlayerResults)
+                            .collect(Collectors.toList());
+
                     printResults(results);
+
+                    AnalysisService analysisService = new AnalysisService();
+                    List<Metric> metricList = analysisService.getAnalysisData(playerMatchData);
+                    metricList.forEach(Printable::print);
                 }
             } catch (Exception e) {
+                stopLoadingAnimation(); // если произошла ошибка — всё равно останавливаем
                 System.out.println("Произошла ошибка: " + e.getMessage());
             }
 
@@ -55,19 +70,13 @@ public class ConsoleApp {
      */
     private SearchData buildSearchData() {
         SteamID steamID = new SteamID(readString());
-
-        SearchRangeType rangeType = readEnum();
-
+        //SearchRangeType rangeType = readEnum();
+        SearchRangeType rangeType = SearchRangeType.MATCH_COUNT;
         Boolean isServerMe = readBoolean();
-
         List<String> ignoreTitles = readList();
-
-        List<GameHero> heroes = readEnumList("Введите имена героев через запятую: ", GameHero.class);
-
+        List<GameHero> heroes = readEnumList("Введите имена героев через запятую, доступные имена [SCOUT, SOLDIER, DEMOMAN, HEAVY, ENJIE, MEDIC, SNIPER, SPY]: ", GameHero.class);
         int count = readInt();
-
-        List<GameMode> modes = readEnumList("Введите режимы игры через запятую: ", GameMode.class);
-
+        List<GameMode> modes = readEnumList("Введите режимы игры через запятую, доступные режимы [SIXES, HIGHLANDER, ULTIDUO_BBAL]: ", GameMode.class);
         return new SearchData(steamID, rangeType, isServerMe, ignoreTitles, heroes, count, modes);
     }
 
@@ -85,6 +94,7 @@ public class ConsoleApp {
         for (Printable r : results) {
             r.print();
         }
+        System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     }
 
 
@@ -131,7 +141,7 @@ public class ConsoleApp {
      * @return список igonredTitle
      */
     private List<String> readList() {
-        System.out.print("Введите игнорируемые заголовки через запятую: ");
+        System.out.print("Введите игнорируемые заголовки через запятую, например, tf2center: ");
         String input = scanner.nextLine().trim();
         if (input.isEmpty()) return Collections.emptyList();
         return Arrays.stream(input.split(","))
@@ -185,5 +195,43 @@ public class ConsoleApp {
             }
         }
         return result;
+    }
+
+    private volatile Thread loadingThread; // поток загрузки
+    private volatile boolean isLoading = true; // в процессе загрузки
+
+    /**
+     * Начать анимацию загрузки
+     */
+    private void startLoadingAnimation() {
+        final char[] wheel = {'-', '\\', '|', '/'};
+        isLoading = true;
+
+        loadingThread = new Thread(() -> {
+            int i = 0;
+            try {
+                while (isLoading && !Thread.currentThread().isInterrupted()) {
+                    System.out.print("\r[" + wheel[i] + "] Загрузка данных... ");
+                    i = (i + 1) % wheel.length;
+                    Thread.sleep(200); // скорость анимации
+                }
+            } catch (InterruptedException ignored) {
+            } finally {
+                System.out.println("\r[✔] Данные загружены.");
+            }
+        });
+
+        loadingThread.setDaemon(true);
+        loadingThread.start();
+    }
+
+    /**
+     * Закончить анимацию загрузки
+     */
+    private void stopLoadingAnimation() {
+        isLoading = false;
+        if (loadingThread != null && loadingThread.isAlive()) {
+            loadingThread.interrupt();
+        }
     }
 }

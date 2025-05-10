@@ -100,7 +100,7 @@ class DataExtractorServiceTest {
         uppdateSearchData();
 
         var result = dataExtractorService.getPlayerResults(searchData);
-        result.forEach(gameRes -> assertEquals(GameHero.SCOUT, gameRes.getGameHero()));
+        result.forEach(gameRes -> assertEquals(GameHero.SCOUT, gameRes.getBasedPlayerResults().getGameHero()));
     }
 
     /**
@@ -116,9 +116,9 @@ class DataExtractorServiceTest {
         boolean containsScout = false;
         boolean containsSoldier = false;
         for(var matchRes : result){
-            if(matchRes.getGameHero() == GameHero.SCOUT){
+            if(matchRes.getBasedPlayerResults().getGameHero() == GameHero.SCOUT){
                 containsScout = true;
-            }else if(matchRes.getGameHero() == GameHero.SOLDIER){
+            }else if(matchRes.getBasedPlayerResults().getGameHero() == GameHero.SOLDIER){
                 containsSoldier = true;
             }
             else {

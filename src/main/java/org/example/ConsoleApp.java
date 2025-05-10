@@ -70,12 +70,13 @@ public class ConsoleApp {
      */
     private SearchData buildSearchData() {
         SteamID steamID = new SteamID(readString());
-        SearchRangeType rangeType = readEnum();
+        //SearchRangeType rangeType = readEnum();
+        SearchRangeType rangeType = SearchRangeType.MATCH_COUNT;
         Boolean isServerMe = readBoolean();
         List<String> ignoreTitles = readList();
-        List<GameHero> heroes = readEnumList("Введите имена героев через запятую: ", GameHero.class);
+        List<GameHero> heroes = readEnumList("Введите имена героев через запятую, доступные имена [SCOUT, SOLDIER, DEMOMAN, HEAVY, ENJIE, MEDIC, SNIPER, SPY]: ", GameHero.class);
         int count = readInt();
-        List<GameMode> modes = readEnumList("Введите режимы игры через запятую: ", GameMode.class);
+        List<GameMode> modes = readEnumList("Введите режимы игры через запятую, доступные режимы [SIXES, HIGHLANDER, ULTIDUO_BBAL]: ", GameMode.class);
         return new SearchData(steamID, rangeType, isServerMe, ignoreTitles, heroes, count, modes);
     }
 
@@ -140,7 +141,7 @@ public class ConsoleApp {
      * @return список igonredTitle
      */
     private List<String> readList() {
-        System.out.print("Введите игнорируемые заголовки через запятую: ");
+        System.out.print("Введите игнорируемые заголовки через запятую, например, tf2center: ");
         String input = scanner.nextLine().trim();
         if (input.isEmpty()) return Collections.emptyList();
         return Arrays.stream(input.split(","))

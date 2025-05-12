@@ -1,6 +1,5 @@
 package org.example.analys;
 
-import org.example.Printable;
 import org.example.search.info.PlayerMatchData;
 
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.List;
 /**
  * Метрики
  */
-public interface Metric extends Printable{
+public interface Metric{
     /**
      * Получить название метрики
      * @return название метрики

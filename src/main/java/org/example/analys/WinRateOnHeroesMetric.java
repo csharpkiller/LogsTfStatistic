@@ -73,15 +73,18 @@ public class WinRateOnHeroesMetric implements Metric {
     }
 
     @Override
-    public void print() {
-        System.out.println();
-        System.out.println(description);
-        heroStatsMap.forEach((hero, stats) ->
-        {
-            System.out.printf("Герой: %s%n", hero);
-            System.out.printf("\tИгр: %d%n", stats.getTotalGames());
-            System.out.printf("\tWin Rate: %.2f%%%n", stats.getWinRate());
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n").append(description).append("\n");
+
+        heroStatsMap.forEach((hero, stats) -> {
+            sb.append("Герой: ").append(hero.toString()).append("\n");
+            sb.append("\tИгр: ").append(stats.getTotalGames()).append("\n");
+            sb.append("\tWin Rate: ").append(String.format("%.2f", stats.getWinRate())).append("%\n");
         });
+
+        return sb.toString();
     }
 
     @Override

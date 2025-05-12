@@ -70,11 +70,14 @@ public class WinRateGeneralMetric implements Metric{
     }
 
     @Override
-    public void print() {
-        System.out.println();
-        System.out.println(description);
-        System.out.printf("Win Rate: %.2f%%%n", winRate);
-        System.out.printf("Draw Rate: %.2f%%%n", drawRate);
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n").append(description).append("\n");
+        sb.append(String.format("Win Rate: %.2f%%%n", winRate));
+        sb.append(String.format("Draw Rate: %.2f%%%n", drawRate));
+
+        return sb.toString();
     }
 
     public Double getWinRate() {

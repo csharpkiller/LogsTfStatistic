@@ -88,26 +88,29 @@ public class WinRateOnMapsWithHeroesMetric implements Metric {
     }
 
     @Override
-    public void print() {
-        System.out.println();
-        System.out.println(description);
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n").append(description).append("\n");
 
         for (Map.Entry<String, Map<GameHero, WinRateStats>> mapEntry : mapHeroWinRateMap.entrySet()) {
             String mapName = mapEntry.getKey();
             Map<GameHero, WinRateStats> heroStats = mapEntry.getValue();
 
-            System.out.printf("Карта: %s%n", mapName);
+            sb.append("Карта: ").append(mapName).append("\n");
 
             for (Map.Entry<GameHero, WinRateStats> heroEntry : heroStats.entrySet()) {
                 GameHero hero = heroEntry.getKey();
                 WinRateStats stats = heroEntry.getValue();
 
-                System.out.printf("\tГерой: %s%n", hero);
-                System.out.printf("\t\tИгр: %d%n", stats.getTotalGames());
-                System.out.printf("\t\tПобед: %.2f%%%n", stats.getWinRate());
+                sb.append("\tГерой: ").append(hero.toString()).append("\n");
+                sb.append("\t\tИгр: ").append(stats.getTotalGames()).append("\n");
+                sb.append("\t\tПобед: ").append(String.format("%.2f", stats.getWinRate())).append("%\n");
             }
-            System.out.println();
+            sb.append("\n");
         }
+
+        return sb.toString();
     }
 
     @Override

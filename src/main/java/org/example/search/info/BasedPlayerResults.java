@@ -1,11 +1,9 @@
 package org.example.search.info;
 
-import org.example.Printable;
-
 /**
  * DataClass, интересующая нас информация из матча
  */
-public class BasedPlayerResults implements Printable {
+public class BasedPlayerResults{
 
     /**
      * Id игрока
@@ -101,8 +99,8 @@ public class BasedPlayerResults implements Printable {
     }
 
     @Override
-    public void print() {
-        System.out.printf(
+    public String toString() {
+        return String.format(
                 "Игрок: %s (%s), Герой: %s, Фраги: %d, Смерти: %d, Ассисты: %d, Урон: %d, Карта: %s, Победа: %s%n",
                 this.nickNameFromMatch,
                 this.steamId,

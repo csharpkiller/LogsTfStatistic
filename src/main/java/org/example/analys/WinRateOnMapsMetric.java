@@ -70,16 +70,18 @@ public class WinRateOnMapsMetric implements Metric {
     }
 
     @Override
-    public void print() {
-        System.out.println();
-        System.out.println(description);
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
-        mapWinRateMap.forEach((map, stats) ->
-        {
-            System.out.printf("Карта: %s%n", map);
-            System.out.printf("\tИгр: %d%n", stats.getTotalGames());
-            System.out.printf("\tWin Rate: %.2f%%%n", stats.getWinRate());
+        sb.append("\n").append(description).append("\n");
+
+        mapWinRateMap.forEach((map, stats) -> {
+            sb.append("Карта: ").append(map).append("\n");
+            sb.append("\tИгр: ").append(stats.getTotalGames()).append("\n");
+            sb.append("\tWin Rate: ").append(String.format("%.2f", stats.getWinRate())).append("%\n");
         });
+
+        return sb.toString();
     }
 
     @Override

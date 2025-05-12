@@ -47,7 +47,10 @@ public class ConsoleApp {
 
                     AnalysisService analysisService = new AnalysisService();
                     List<Metric> metricList = analysisService.getAnalysisData(playerMatchData);
-                    metricList.forEach(Printable::print);
+
+                    metricList.forEach(metric -> {
+                        System.out.println(metric.toString());
+                    });
                 }
             } catch (Exception e) {
                 stopLoadingAnimation();
@@ -90,9 +93,9 @@ public class ConsoleApp {
             return;
         }
 
-        for (Printable r : results) {
-            r.print();
-        }
+        results.forEach(result ->{
+            System.out.println(result.toString());
+        });
         System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     }
 

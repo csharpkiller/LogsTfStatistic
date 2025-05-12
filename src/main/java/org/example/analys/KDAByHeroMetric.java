@@ -63,8 +63,11 @@ public class KDAByHeroMetric implements Metric {
     }
 
     @Override
-    public void print() {
-        System.out.println(description);
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(description).append("\n");
+
         for (Map.Entry<GameHero, KDAStats> entry : heroKdaMap.entrySet()) {
             GameHero hero = entry.getKey();
             KDAStats stats = entry.getValue();
@@ -75,12 +78,18 @@ public class KDAByHeroMetric implements Metric {
             double kd = stats.getKdRatio();
             int games = stats.getTotalGames();
 
-            System.out.printf("Герой: %s%n", hero);
-            System.out.printf("\tИгр: %d%n", games);
-            System.out.printf("\taverage (KDA): %.1f / %.1f / %.1f%n", avgKills, avgDeaths, avgAssists);
-            System.out.printf("\taverage (K/D): %.2f%n", kd);
-            System.out.println();
+            sb.append("Герой: ").append(hero.toString()).append("\n");
+            sb.append("\tИгр: ").append(games).append("\n");
+            sb.append("\taverage (KDA): ")
+                    .append(String.format("%.1f / %.1f / %.1f", avgKills, avgDeaths, avgAssists))
+                    .append("\n");
+            sb.append("\taverage (K/D): ")
+                    .append(String.format("%.2f", kd))
+                    .append("\n");
+            sb.append("\n");
         }
+
+        return sb.toString();
     }
 
     @Override

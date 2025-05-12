@@ -10,7 +10,7 @@ import java.util.List;
 public class AnalysisPlayerStatistic {
 
     public PlayerStatisticData getPlayerStatistic(List<BasedPlayerResults> basedPlayerResultsList){
-        //TODO
+        //TODO данная работа будет проводится при решении второй задачи
         return null;
     }
 }

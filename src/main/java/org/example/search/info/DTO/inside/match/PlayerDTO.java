@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PlayerDTO {
     private final String team; // Название команды
     private final ClassStatsDTO[] class_stats; // статистики по персонажам
+    /**
+     * кол-во убийств
+     */
     private final int kills; // кол-во убийств
     private final int deaths; // кол-во смертей
     private final int assists; // кол-во помощи

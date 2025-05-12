@@ -30,6 +30,11 @@ public class KDAByHeroMetric implements Metric {
         return true;
     }
 
+    /**
+     * Посчитать значения kills deaths assists для каждого персонажа
+     * @param results результаты матча игрока
+     * @return словарь, ключ - персонаж, значение - kdaStats с возможностью получить average k/d/a через .get
+     */
     private Map<GameHero, KDAStats> calculateKdaForGameHeroInGames(List<PlayerMatchData> results){
         Map<GameHero, KDAStats> heroKdaMap = new HashMap<>();
         for (PlayerMatchData data : results) {

@@ -2,6 +2,7 @@ package org.example.analys;
 
 import org.example.search.info.*;
 import org.example.search.info.objectwrappers.SteamID;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -182,12 +183,13 @@ class AllMetricsResultsTest {
             {
                 missingNamesOfMetrics.add(metric.getName());
             }
-
+            StringBuilder stringBuilder = new StringBuilder("не хватает теста для: ");
             if(!missingNamesOfMetrics.isEmpty()){
                 missingNamesOfMetrics.forEach(nameOfMetric ->{
-                    System.out.println("не хватает теста для " + nameOfMetric);
+                    stringBuilder.append(nameOfMetric);
+                    stringBuilder.append(" ");
                 });
-                assertTrue(false);
+                Assertions.fail(stringBuilder.toString());
             }
         });
     }

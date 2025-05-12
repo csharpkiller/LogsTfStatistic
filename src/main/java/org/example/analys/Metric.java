@@ -9,8 +9,17 @@ import java.util.List;
  * Метрики
  */
 public interface Metric extends Printable{
-    String getName(); // Получить название метрики
-    String getDescription(); //Получить описание метрики
+    /**
+     * Получить название метрики
+     * @return название метрики
+     */
+    String getName();
+
+    /**
+     * Получить описание метрики
+     * @return описание
+     */
+    String getDescription();
 
     /**
      * Считает статистики, заполняя поля.

@@ -52,7 +52,9 @@ public class DataExtractorService {
      */
     private final Integer countOfPossibleErrors;
 
-    // сколько матчей мы можем рассмотреть
+    /**
+     * Сколько матчей мы можем рассмотреть
+     */
     private final Integer countOfMaximumCheckMatches;
 
     /**
@@ -108,8 +110,6 @@ public class DataExtractorService {
             }
 
             List<PlayerMatchData> intermediateListOfResultData = fillPlayerMatchData(searchData, listOfMatchResults);
-            //List<BasedPlayerResults> basedPlayerResultData = objectMapper.convertMatchRootToPlayerResultData(searchData.getPlayerId(), listOfMatchResults);
-
 
             resultData.addAll(intermediateListOfResultData);
         }
@@ -129,10 +129,7 @@ public class DataExtractorService {
     private List<PlayerMatchData> fillPlayerMatchData(SearchData searchData, List<MatchRootDTO> matchResultList){
         List<PlayerMatchData> listOfPlayerMatchData = new ArrayList<>();
         List<BasedPlayerResults> basedPlayerResultData = objectMapper.convertMatchRootToPlayerResultData(searchData.getPlayerId(), matchResultList);
-        if(basedPlayerResultData.size() != matchResultList.size()){ //TODO to delete?
-            //хотя такой ситуации вообще не должно возникать, TODO проверить
-            //TODO придумать как добавить в список generalMissingMatchesAfterParse добавления id матчей
-            //TODO изменить описание листа и комментарий
+        if(basedPlayerResultData.size() != matchResultList.size()){
             return List.of();
         }
         for(int index = 0; index < matchResultList.size(); index++){

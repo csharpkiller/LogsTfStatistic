@@ -70,7 +70,6 @@ public class ConsoleApp {
      */
     private SearchData buildSearchData() {
         SteamID steamID = new SteamID(readString());
-        //SearchRangeType rangeType = readEnum();
         SearchRangeType rangeType = SearchRangeType.MATCH_COUNT;
         Boolean isServerMe = readBoolean();
         List<String> ignoreTitles = readList();
@@ -197,8 +196,15 @@ public class ConsoleApp {
         return result;
     }
 
-    private volatile Thread loadingThread; // поток загрузки
-    private volatile boolean isLoading = true; // в процессе загрузки
+    /**
+     * поток загрузки
+     */
+    private volatile Thread loadingThread;
+
+    /**
+     * в процессе загрузки
+     */
+    private volatile boolean isLoading = true;
 
     /**
      * Начать анимацию загрузки

@@ -2,7 +2,6 @@ package org.example.analys;
 
 import org.example.search.info.PlayerMatchData;
 import org.example.search.info.GameResult;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -11,8 +10,15 @@ import java.util.*;
  */
 public class WinRateOnMapsMetric implements Metric {
 
-    private final String name = "Win Rate by Maps"; // название метрики
-    private final String description = "Процент побед по картам"; // описание метрики
+    /**
+     * Название метрики
+     */
+    private final String name = "Win Rate by Maps";
+
+    /**
+     * Описание метрики
+     */
+    private final String description = "Процент побед по картам";
 
     /**
      * Результат метрики

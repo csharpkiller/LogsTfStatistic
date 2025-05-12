@@ -6,9 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Статистика игрока за раунд
  */
 public class RoundPlayerDTO {
-    private final String team; // название команды (Red, Blue)
-    private final int kills; // кол-во убийств за раунд
-    private final int dmg; // нанесенный damage за раунд
+
+    /**
+     * Название команды (Red, Blue)
+     */
+    private final String team;
+
+    /**
+     * Кол-во убийств за раунд
+     */
+    private final int kills;
+
+    /**
+     * Нанесенный damage за раунд
+     */
+    private final int dmg;
 
     public RoundPlayerDTO(
           @JsonProperty("team") String team,

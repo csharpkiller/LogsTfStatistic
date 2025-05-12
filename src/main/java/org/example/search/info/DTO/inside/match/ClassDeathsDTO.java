@@ -13,10 +13,14 @@ import java.util.HashMap;
 public class ClassDeathsDTO {
 
     /**
-     * ключ: SteamId игрока, значения: персонажи от которых он умер в матче
+     * Ключ: SteamId игрока, значения: персонажи от которых он умер в матче
      */
     private Map<String, ClassDeathEntryDTO> entries = new HashMap<>();
-    private boolean entries_open = true; // lateinit realisation
+
+    /**
+     * lateinit realisation
+     */
+    private boolean entries_open = true;
 
     /**
      * Для того чтобы Jackson смог запарсить нормально
@@ -43,16 +47,48 @@ public class ClassDeathsDTO {
  */
 class ClassDeathEntryDTO {
     /**
-     * Имя переменной - персонаж, значение - сколько раз игрок от него умер
+     * Сколько раз умер от scout
      */
     private final int scout;
+
+    /**
+     * Сколько раз умер от medic
+     */
     private final int medic;
+
+    /**
+     * Сколько раз умер от soldier
+     */
     private final int soldier;
+
+    /**
+     * Сколько раз умер от demoman
+     */
     private final int demoman;
+
+    /**
+     * Сколько раз умер от heavyweapons
+     */
     private final int heavyweapons;
+
+    /**
+     * Сколько раз умер от pyro
+     */
     private final int pyro;
+
+    /**
+     * Сколько раз умер от sniper
+     */
     private final int sniper;
+
+    /**
+     * Сколько раз умер от engineer
+     */
     private final int engineer;
+
+    /**
+     * Сколько раз умер от spy
+     */
     private final int spy;
 
     public ClassDeathEntryDTO(

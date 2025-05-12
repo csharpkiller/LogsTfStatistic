@@ -5,10 +5,26 @@ package org.example.analys;
  * TODO возможно я вообще не прав
  */
 public class WinRateStats {
-    private Integer wins = 0; // число побед
-    private Integer totalGames = 0; // число игр
-    private Double winRate = 0.; // процент побед
-    private boolean isOpenToChange = true; // открыт для изменения
+
+    /**
+     * Число побед
+     */
+    private Integer wins = 0;
+
+    /**
+     * Число игр
+     */
+    private Integer totalGames = 0;
+
+    /**
+     * Процент побед
+     */
+    private Double winRate = 0.;
+
+    /**
+     * Открыт для изменения
+     */
+    private boolean isOpenToChange = true;
 
     /**
      * Закрыть для изменения
@@ -18,7 +34,7 @@ public class WinRateStats {
     }
 
     /**
-     * Увеличить число побед
+     * Увеличить число побед и пересчитать winrate
      */
     public void increaseWins(){
         if(isOpenToChange){
@@ -27,6 +43,9 @@ public class WinRateStats {
         }
     }
 
+    /**
+     * Увеличить число игр и пересчитать winrate
+     */
     public void increaseTotalGames(){
         if(isOpenToChange){
             totalGames++;
@@ -34,6 +53,10 @@ public class WinRateStats {
         }
     }
 
+    /**
+     * Расчитать winrate
+     * @return winrate
+     */
     private Double calculateWinRate(){
         return totalGames == 0 ? 0 : (wins * 100.0) / totalGames;
     }

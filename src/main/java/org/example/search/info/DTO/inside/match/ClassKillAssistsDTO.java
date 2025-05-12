@@ -16,7 +16,11 @@ public class ClassKillAssistsDTO {
      * Ключ: steam id игрока, значение: На каких персонажах помог и сколько раз
      */
     private Map<String, ClassKillAssistEntryDTO> entries = new HashMap<>();
-    private boolean entries_open = true; // lateinit realisation
+
+    /**
+     * lateinit realisation
+     */
+    private boolean entries_open = true;
 
     /**
      *Для парсинга в entries
@@ -47,16 +51,48 @@ public class ClassKillAssistsDTO {
 class ClassKillAssistEntryDTO {
 
     /**
-     * Кол-во ассистов при убийствах на *персонаж*
+     * Кол-во помощи при убийствах на scout
      */
     private final int scout;
+
+    /**
+     * Кол-во помощи при убийствах на medic
+     */
     private final int medic;
+
+    /**
+     * Кол-во помощи при убийствах на soldier
+     */
     private final int soldier;
+
+    /**
+     * Кол-во помощи при убийствах на demoman
+     */
     private final int demoman;
+
+    /**
+     * Кол-во помощи при убийствах на heavyweapons
+     */
     private final int heavyweapons;
+
+    /**
+     * Кол-во помощи при убийствах на pyro
+     */
     private final int pyro;
+
+    /**
+     * Кол-во помощи при убийствах на sniper
+     */
     private final int sniper;
+
+    /**
+     * Кол-во помощи при убийствах на engineer
+     */
     private final int engineer;
+
+    /**
+     * Кол-во помощи при убийствах на spy
+     */
     private final int spy;
 
     public ClassKillAssistEntryDTO(

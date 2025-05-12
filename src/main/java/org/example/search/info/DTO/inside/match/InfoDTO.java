@@ -6,28 +6,116 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * General информация по матчу
  */
 public class InfoDTO {
-    private final String map; // Карта на которой происходил матч
-    private final boolean supplemental; // Является ли запись дополнительной
-    private final int total_length; // Общая продолжительность матча в секундах
-    private final boolean hasHS; // Есть ли информация о количестве хедшотов (headshots)
-    private final boolean hasHS_hit; // Есть ли информация о том, сколько раз игрок целился в голову и попал
-    private final boolean hasRealDamage; // Есть ли в логе информация о реальном уроне. Бывает багает сервак и с разминки добавляется урон
-    private final boolean hasWeaponDamage; // Есть ли в логе информация о уроне по типам оружия.
-    private final boolean hasAccuracy; // Есть ли данные об эффективности стрельбы (проценрты попадания с оружия)
-    private final boolean hasHP; // Есть ли данные о здоровье игроков
-    private final boolean hasHP_real; // Есть ли точные данные о здоровье игроков (без добавления с разминки)
-    private final boolean hasBS; // Есть ли данные о ??BackStabs?? убийств в спину
-    private final boolean hasCP; // Есть ли данные о захвате контрольных точек (Control Points)
-    private final boolean hasSB; // Есть ли данные о спавнбилдах? Спавнбилд — это когда игроки восстанавливают своё здоровье и боеприпасы при смене респавна
-    private final boolean hasDT; // Есть ли данные о времени смерти (Death Time)? То есть когда каждый игрок погибал
-    private final boolean hasAS; // Есть ли информация о КРУТЫХ ПОПАДАНИЙ РАКЕТОЙ В ВОЗДУХЕ (Air Shots)
-    private final boolean hasHR; // Есть ли данные о лечении (Healing Received) Т.е. сколько здоровья получил игрок от медика или других источников
-    private final boolean hasIntel; // Есть ли данные о захвате интеллекта (для режима Intelligence)?
-    private final boolean AD_scoring; // Используется ли система подсчёта очков типа Attack/Defend?
-    private final Object[] notifications; // Массив уведомлений или ошибок, связанных с логом.
-    private final String title; // Заголовок матча.
-    private final long date; // Число в timestamp
-    private final UploaderDTO uploaderDTO; // Кто загрузил log (servme, игрок, другой ресурс...)
+
+    /**
+     * Карта на которой происходил матч
+     */
+    private final String map;
+
+    /**
+     * Является ли запись дополнительной
+     */
+    private final boolean supplemental;
+
+    /**
+     * Общая продолжительность матча в секундах
+     */
+    private final int total_length;
+
+    /**
+     * Есть ли информация о количестве хедшотов (headshots)
+     */
+    private final boolean hasHS;
+
+    /**
+     * Есть ли информация о том, сколько раз игрок целился в голову и попал
+     */
+    private final boolean hasHS_hit;
+
+    /**
+     * Есть ли в логе информация о реальном уроне. Бывает багает сервак и с разминки добавляется урон
+     */
+    private final boolean hasRealDamage;
+
+    /**
+     * Есть ли в логе информация о уроне по типам оружия.
+     */
+    private final boolean hasWeaponDamage;
+
+    /**
+     * Есть ли данные об эффективности стрельбы (проценрты попадания с оружия)
+     */
+    private final boolean hasAccuracy;
+
+    /**
+     * Есть ли данные о здоровье игроков
+     */
+    private final boolean hasHP;
+
+    /**
+     * Есть ли точные данные о здоровье игроков (без добавления с разминки)
+     */
+    private final boolean hasHP_real;
+
+    /**
+     * Есть ли данные о ??BackStabs?? убийств в спину
+     */
+    private final boolean hasBS;
+
+    /**
+     * Есть ли данные о захвате контрольных точек (Control Points)
+     */
+    private final boolean hasCP;
+
+    /**
+     * Есть ли данные о спавнбилдах? Спавнбилд — это когда игроки восстанавливают своё здоровье и боеприпасы при смене респавна
+     */
+    private final boolean hasSB;
+
+    /**
+     * Есть ли данные о времени смерти (Death Time)? То есть когда каждый игрок погибал
+     */
+    private final boolean hasDT;
+
+    /**
+     * Есть ли информация о КРУТЫХ ПОПАДАНИЙ РАКЕТОЙ В ВОЗДУХЕ (Air Shots)
+     */
+    private final boolean hasAS;
+
+    /**
+     * Есть ли данные о лечении (Healing Received) Т.е. сколько здоровья получил игрок от медика или других источников
+     */
+    private final boolean hasHR;
+
+    /**
+     * Есть ли данные о захвате интеллекта (для режима Intelligence)?
+     */
+    private final boolean hasIntel;
+
+    /**
+     * Используется ли система подсчёта очков типа Attack/Defend?
+     */
+    private final boolean AD_scoring;
+
+    /**
+     * Массив уведомлений или ошибок, связанных с логом.
+     */
+    private final Object[] notifications;
+
+    /**
+     * Заголовок матча.
+     */
+    private final String title;
+
+    /**
+     * Число в timestamp
+     */
+    private final long date;
+
+    /**
+     * Кто загрузил log (servme, игрок, другой ресурс...)
+     */
+    private final UploaderDTO uploaderDTO;
 
     public InfoDTO(
             @JsonProperty("map") String map,

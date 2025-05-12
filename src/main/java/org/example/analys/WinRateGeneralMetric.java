@@ -9,11 +9,26 @@ import java.util.List;
  * Метрика процент побед
  */
 public class WinRateGeneralMetric implements Metric{
-    private final String name = "Win Rate"; // название метрики
-    private final String description = "Общий процент побед"; // описание метрики
 
-    private Double winRate = 0.; // общий процент побед
-    private Double drawRate = 0.; // процент ничьи
+    /**
+     * Название метрики
+     */
+    private final String name = "Win Rate";
+
+    /**
+     * Описание метрики
+     */
+    private final String description = "Общий процент побед";
+
+    /**
+     * Общий процент побед
+     */
+    private Double winRate = 0.;
+
+    /**
+     * Процент ничьи
+     */
+    private Double drawRate = 0.;
 
     @Override
     public boolean compute(List<PlayerMatchData> results){

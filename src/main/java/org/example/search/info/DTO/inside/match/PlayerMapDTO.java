@@ -14,7 +14,11 @@ public class PlayerMapDTO {
      * Ключ: steam id игрока, значение: подробная информация за матч
      */
     private Map<String, PlayerDTO> playerMap = new HashMap<>();
-    private boolean playerMap_open = true; // lateinit realisation
+
+    /**
+     * lateinit realisation
+     */
+    private boolean playerMap_open = true;
 
     /**
      * Для парсинга))

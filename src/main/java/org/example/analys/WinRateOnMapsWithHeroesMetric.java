@@ -12,8 +12,15 @@ import java.util.*;
  */
 public class WinRateOnMapsWithHeroesMetric implements Metric {
 
-    private final String name = "Win Rate by Maps and Heroes"; // название метрики
-    private final String description = "Процент побед по картам с разбивкой по героям"; // описание метрики
+    /**
+     * Название метрики
+     */
+    private final String name = "Win Rate by Maps and Heroes";
+
+    /**
+     * Описание метрики
+     */
+    private final String description = "Процент побед по картам с разбивкой по героям";
 
     /**
      * Результат метрики
@@ -38,6 +45,11 @@ public class WinRateOnMapsWithHeroesMetric implements Metric {
         return true;
     }
 
+    /**
+     * Считает кол-во игр и winrate для каждого героя на определенной карте
+     * @param playerResults список результатов матча игрока
+     * @return результат метрики
+     */
     private Map<String, Map<GameHero, WinRateStats>> calculateWinRateOnMapsWithHero(List<PlayerMatchData> playerResults){
         Map<String, Map<GameHero, WinRateStats>> mapHeroWinRateMap = new HashMap<>();
         GameMapFormat gameMapFormat = new GameMapFormat();
@@ -63,6 +75,8 @@ public class WinRateOnMapsWithHeroesMetric implements Metric {
 
         /**
          * TODO я совсем тю-тю?
+         * Можно по-нормальному поработать с WinRateStats,
+         * после вернуть другой контейнер с финальными результатами без прикола с .closeToChange() )))
          */
         mapHeroWinRateMap.forEach((map, value) -> {
             value.forEach((hero, stat) ->{

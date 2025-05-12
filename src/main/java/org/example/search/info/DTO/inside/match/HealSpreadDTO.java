@@ -15,7 +15,11 @@ public class HealSpreadDTO {
      * (Ключ: steam id игрока, значение: (ключ: steam id игрока которого лечил, значение: кол-во лечения))
      */
     private Map<String, Map<String, Integer>> healData = new HashMap<>();
-    private boolean healData_open = true; // lateinit realisation
+
+    /**
+     * lateinit realisation
+     */
+    private boolean healData_open = true;
 
     /**
      *Для парсинга

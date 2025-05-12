@@ -4,10 +4,30 @@ package org.example.analys;
  * Класс для подсчета KDA статистики
  */
 public class KDAStats {
-    private int totalKills = 0; // общее кол-во киллов
-    private int totalDeaths = 0; // общее кол-во смертей
-    private int totalAssists = 0; // общее кол-во помощи
-    private int totalGames = 0; // общее кол-во матчей
+
+    /**
+     * Общее кол-во киллов
+     */
+    private int totalKills = 0;
+
+    /**
+     * Общее кол-во смертей
+     */
+    private int totalDeaths = 0;
+
+    /**
+     * Общее кол-во помощи
+     */
+    private int totalAssists = 0;
+
+    /**
+     * Общее кол-во матчей
+     */
+    private int totalGames = 0;
+
+    /**
+     * Открыто для изменения?
+     */
     private boolean isOpenToChange = true;
 
     /**

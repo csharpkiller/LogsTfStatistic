@@ -7,8 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class RoundTeamDTO {
 
-    private final TeamDTO red; // RED TEAM)
-    private final TeamDTO blue; // BLUE TEAM)
+    /**
+     * Общая сводка информации в RED TEAM
+     */
+    private final TeamDTO red;
+
+    /**
+     * Общая сводка информации BLUE TEAM
+     */
+    private final TeamDTO blue;
 
     public RoundTeamDTO(
             @JsonProperty("Red") TeamDTO red,

@@ -13,8 +13,16 @@ import java.util.Map;
  * Метрика процент побед на персонажах
  */
 public class WinRateOnHeroesMetric implements Metric {
-    private final String name = "Win Rate by Heroes"; // название метрики
-    private final String description = "Процент побед по каждому герою"; // описание метрики
+
+    /**
+     * Название метрики
+     */
+    private final String name = "Win Rate by Heroes";
+
+    /**
+     * Описание метрики
+     */
+    private final String description = "Процент побед по каждому герою";
 
     /**
      * Результаты метрики:

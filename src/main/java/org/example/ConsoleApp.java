@@ -33,11 +33,11 @@ public class ConsoleApp {
                 if (!searchData.getPlayerId().isValidId()) {
                     System.out.println("steam id is not valid");
                 } else {
-                    startLoadingAnimation(); //Включаем анимацию
+                    startLoadingAnimation();
 
                     List<PlayerMatchData> playerMatchData = service.getPlayerResults(searchData);
 
-                    stopLoadingAnimation(); //Останавливаем анимацию
+                    stopLoadingAnimation();
 
                     List<BasedPlayerResults> results = playerMatchData.stream()
                             .map(PlayerMatchData::getBasedPlayerResults)
@@ -50,7 +50,7 @@ public class ConsoleApp {
                     metricList.forEach(Printable::print);
                 }
             } catch (Exception e) {
-                stopLoadingAnimation(); // если произошла ошибка — всё равно останавливаем
+                stopLoadingAnimation();
                 System.out.println("Произошла ошибка: " + e.getMessage());
             }
 
@@ -197,12 +197,12 @@ public class ConsoleApp {
     }
 
     /**
-     * поток загрузки
+     * Поток загрузки
      */
     private volatile Thread loadingThread;
 
     /**
-     * в процессе загрузки
+     * В процессе загрузки
      */
     private volatile boolean isLoading = true;
 

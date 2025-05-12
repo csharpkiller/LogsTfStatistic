@@ -13,14 +13,12 @@ import java.util.List;
  * Как вариант можно было бы полностью запарсить, но в данном случае это излишне (бесполезная инфа).
  */
 public class JsonRootMatch {
-    private List<MatchDTO> logs;
-    private boolean logs_open = true;
 
     /**
-     * TODO переделать все в DTO как здесь, удалить все setter, поля _open, добавить конструктор
-     * вот умные люди реально позаботились и не нужно с set'ами выделываться
-     * @param logs
+     * Список MatchDto (список id матчей)
      */
+    private List<MatchDTO> logs;
+
     @JsonCreator
     public JsonRootMatch(@JsonProperty("logs") List<MatchDTO> logs){
         this.logs = logs;

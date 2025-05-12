@@ -16,7 +16,11 @@ public class ClassKillsDTO {
      * Ключ: steam id игрока, значение: каких персонажей убил и сколько раз
      */
     private Map<String, ClassKillEntryDTO> entries = new HashMap<>();
-    private boolean entries_open = true; // lateinit realisation
+
+    /**
+     * lateinit realisation
+     */
+    private boolean entries_open = true;
 
     /**
      * Для парсинга
@@ -43,16 +47,48 @@ public class ClassKillsDTO {
  */
 class ClassKillEntryDTO {
     /**
-     * Персонаж - сколько раз игрок убил
+     * Сколько раз игрок убил персонажа scout
      */
     private final int scout;
+
+    /**
+     * Сколько раз игрок убил персонажа medic
+     */
     private final int medic;
+
+    /**
+     * Сколько раз игрок убил персонажа soldier
+     */
     private final int soldier;
+
+    /**
+     * Сколько раз игрок убил персонажа demoman
+     */
     private final int demoman;
+
+    /**
+     * Сколько раз игрок убил персонажа heavyweapons
+     */
     private final int heavyweapons;
+
+    /**
+     * Сколько раз игрок убил персонажа pyro
+     */
     private final int pyro;
+
+    /**
+     * Сколько раз игрок убил персонажа sniper
+     */
     private final int sniper;
+
+    /**
+     * Сколько раз игрок убил персонажа engineer
+     */
     private final int engineer;
+
+    /**
+     * Сколько раз игрок убил персонажа spy
+     */
     private final int spy;
 
     public ClassKillEntryDTO(

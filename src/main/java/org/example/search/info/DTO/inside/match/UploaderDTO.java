@@ -6,9 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Информация о том кто загрузил результаты матча
  */
 public class UploaderDTO {
-    private final String id; // steam id игрока
-    private final String name; // nickname игрока
-    private final String info; // Дополнительная информация
+
+    /**
+     * Steam id игрока в формате id64
+     */
+    private final String id;
+
+    /**
+     * Nickname игрока в матче
+     */
+    private final String name;
+
+    /**
+     * Дополнительная информация
+     */
+    private final String info;
 
     public UploaderDTO(
            @JsonProperty("id") String id,

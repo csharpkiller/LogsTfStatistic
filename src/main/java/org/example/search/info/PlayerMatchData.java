@@ -8,9 +8,21 @@ import org.example.search.info.DTO.inside.match.MatchRootDTO;
  * для дальнейших более сложных метрик.
  */
 public class PlayerMatchData {
-    private final SearchData searchData; // игрок
-    private final MatchRootDTO matchInfo; // полная информация о матче
-    private final BasedPlayerResults basedPlayerResults; // основная статистика игрока
+
+    /**
+     * Запрос пользователя
+     */
+    private final SearchData searchData;
+
+    /**
+     * Полная информация о матче
+     */
+    private final MatchRootDTO matchInfo;
+
+    /**
+     * Основная статистика игрока
+     */
+    private final BasedPlayerResults basedPlayerResults;
 
     public PlayerMatchData(SearchData searchData, MatchRootDTO matchInfo, BasedPlayerResults basedPlayerResults) {
         this.searchData = searchData;

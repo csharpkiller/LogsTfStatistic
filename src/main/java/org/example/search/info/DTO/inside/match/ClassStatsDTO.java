@@ -6,13 +6,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Статистика по персонажу
  */
 public class ClassStatsDTO {
-    private final String hero_str; // название персонажа
-    private final int kills; // кол-во убийств, которое сделал на этом персонаже
-    private final int assists; // кол-во помощи, ...
-    private final int deaths; // кол-во смертей, ...
-    private final int dmg; // нанесенный урон, ...
-    private final WeaponMap weapon; // оружия, которые использовал на этом персонаже
-    private final int total_time; // кол-во времени проведенное в матче на этом персонаже
+
+    /**
+     * Название персонажа
+     */
+    private final String hero_str;
+
+    /**
+     * Кол-во убийств, играя за hero_str
+     */
+    private final int kills;
+
+    /**
+     * Кол-во помощи, играя за hero_str
+     */
+    private final int assists;
+
+    /**
+     * Кол-во смертей, играя за hero_str
+     */
+    private final int deaths;
+
+    /**
+     * Кол-во урона, нанесенное, играя за hero_str
+     */
+    private final int dmg;
+
+    /**
+     * Оружия, которые использовал играя на hero_str
+     */
+    private final WeaponMap weapon;
+
+    /**
+     * Кол-во времени проведенное в матче на hero_str
+     */
+    private final int total_time;
 
     public ClassStatsDTO(
             @JsonProperty("type") String hero_str,

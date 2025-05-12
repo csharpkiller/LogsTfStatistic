@@ -6,39 +6,156 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Общая, вся, статистика игрока за матч.
  */
 public class PlayerDTO {
-    private final String team; // Название команды
-    private final ClassStatsDTO[] class_stats; // статистики по персонажам
+
     /**
-     * кол-во убийств
+     * Название команды
      */
-    private final int kills; // кол-во убийств
-    private final int deaths; // кол-во смертей
-    private final int assists; // кол-во помощи
-    private final int suicides; // кол-во самоубийств
-    private final String kapd; // kills + assist на смерть
-    private final String kpd; // убийств на одну смерть
-    private final int dmg; // нанесенный урон
-    private final int dmg_real; // реальный нанесенный урон
-    private final int dt; // полученный урон
-    private final int dt_real; // реально полученный урон
-    private final int hr; // полученное лечение
-    private final int lks; // ластхит, кол-во финальных выстрелов? по умирающим игрокам
-    private final int as; // сколько секунд игрок был активен в игре
-    private final int dapd; // урона на одну смерть
-    private final int dapm; // урон в минуту
-    private final int ubers; // кол-во уберзарядов
-    private final UberTypesDTO ubertypes; // типы уберзарядов (криты, убер)
-    private final int drops; // кол-во дропов (когда есть убер 100% и ты умираешь)
-    private final int medkits; // сколько подобрано аптечек
-    private final int medkits_hp; // сколько подобранные аптечки восстановили здоровья
-    private final int backstabs; // кол-во убийств в спину (за герой SPY)
-    private final int headshots; // кол-во убийств в голову
-    private final int headshots_hit; // кол-во попаданий в голову
-    private final int sentries; // кол-во построек (за класс ENJIE)
-    private final int heal; // общее кол-во лечения, оказанного другим игрокам
-    private final int cpc; // кол-во захваченных точек
-    private final int ic; // кол-во захваченных флагов
-    private final MedicStatsDTO medicstats; // подробная информация по уберзарядам
+    private final String team;
+
+    /**
+     * Статистики по персонажам
+     */
+    private final ClassStatsDTO[] class_stats;
+
+    /**
+     * Кол-во убийств
+     */
+    private final int kills;
+
+    /**
+     * Кол-во смертей
+     */
+    private final int deaths;
+
+    /**
+     * Кол-во помощи
+     */
+    private final int assists;
+
+    /**
+     * Кол-во самоубийств
+     */
+    private final int suicides;
+
+    /**
+     * Kills + assist на смерть
+     */
+    private final String kapd;
+
+    /**
+     * Убийств на одну смерть
+     */
+    private final String kpd;
+
+    /**
+     * Нанесенный урон
+     */
+    private final int dmg;
+
+    /**
+     * Реальный нанесенный урон
+     */
+    private final int dmg_real;
+
+    /**
+     * Полученный урон
+     */
+    private final int dt;
+
+    /**
+     * Реально полученный урон
+     */
+    private final int dt_real;
+
+    /**
+     * Полученное лечение
+     */
+    private final int hr;
+
+    /**
+     * Ластхит, кол-во финальных выстрелов? по умирающим игрокам
+     */
+    private final int lks;
+
+    /**
+     * Сколько секунд игрок был активен в игре
+     */
+    private final int as;
+
+    /**
+     * Урона на одну смерть
+     */
+    private final int dapd;
+
+    /**
+     * Урон в минуту
+     */
+    private final int dapm;
+
+    /**
+     * Кол-во уберзарядов
+     */
+    private final int ubers;
+
+    /**
+     * Типы уберзарядов (криты, убер)
+     */
+    private final UberTypesDTO ubertypes;
+
+    /**
+     * Кол-во дропов (когда есть убер 100% и ты умираешь)
+     */
+    private final int drops;
+
+    /**
+     * Сколько подобрано аптечек
+     */
+    private final int medkits;
+
+    /**
+     * Сколько подобранные аптечки восстановили здоровья
+     */
+    private final int medkits_hp;
+
+    /**
+     * Кол-во убийств в спину (за героя SPY)
+     */
+    private final int backstabs;
+
+    /**
+     * Кол-во убийств в голову
+     */
+    private final int headshots;
+
+    /**
+     * Кол-во попаданий в голову
+     */
+    private final int headshots_hit;
+
+    /**
+     * Кол-во построек (за класс ENJIE)
+     */
+    private final int sentries;
+
+    /**
+     * Общее кол-во лечения, оказанного другим игрокам
+     */
+    private final int heal;
+
+    /**
+     * Кол-во захваченных точек
+     */
+    private final int cpc;
+
+    /**
+     * Кол-во захваченных флагов
+     */
+    private final int ic;
+
+    /**
+     * Подробная информация по уберзарядам
+     */
+    private final MedicStatsDTO medicstats;
 
     public PlayerDTO(
             @JsonProperty("team") String team,

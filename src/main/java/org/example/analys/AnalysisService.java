@@ -10,7 +10,11 @@ import java.util.List;
  * Класс предназначен для вычисления статистик на основе входящих данных
  */
 public class AnalysisService {
-    private final List<Metric> allMetrics; // список всех метрик
+
+    /**
+     * Список всех метрик
+     */
+    private final List<Metric> allMetrics;
 
     public AnalysisService(){
         allMetrics = List.of(

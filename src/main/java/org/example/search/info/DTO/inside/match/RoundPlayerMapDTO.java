@@ -15,7 +15,11 @@ public class RoundPlayerMapDTO {
      * Ключ: steam id игрока, значение: статистики игрока за раунд
      */
     private Map<String, RoundPlayerDTO> players = new HashMap<>();
-    private boolean players_open = true; // lateinit realisation
+
+    /**
+     * lateinit realisation
+     */
+    private boolean players_open = true;
 
     /**
      * Для парсинга

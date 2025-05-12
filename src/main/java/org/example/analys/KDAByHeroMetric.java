@@ -12,9 +12,19 @@ import java.util.*;
  */
 public class KDAByHeroMetric implements Metric {
 
-    private final String name = "KDA by Heroes"; //На
+    /**
+     * Название метрики
+     */
+    private final String name = "KDA by Heroes";
+
+    /**
+     * Описание метрики
+     */
     private final String description = "Средние значения K/D/A по героям";
 
+    /**
+     * Словарь, ключ-персонаж, значение - контейнер с Average Kills Deaths Assists
+     */
     private Map<GameHero, KDAStats> heroKdaMap = new HashMap<>();
 
     @Override

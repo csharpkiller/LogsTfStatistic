@@ -3,6 +3,7 @@ package org.example.search.info;
 import org.example.search.info.DTO.ParseResult;
 import org.example.search.info.DTO.inside.match.MatchRootDTO;
 import org.example.search.info.DTO.matches.list.MatchDTO;
+import org.example.search.info.objectwrappers.SteamID;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -51,7 +52,9 @@ public class DataExtractorService {
      */
     private final Integer countOfPossibleErrors;
 
-    // сколько матчей мы можем рассмотреть
+    /**
+     * Сколько матчей мы можем рассмотреть
+     */
     private final Integer countOfMaximumCheckMatches;
 
     /**
@@ -77,12 +80,12 @@ public class DataExtractorService {
      * @param searchData user input
      * @return список результатов
      */
-    public List<BasedPlayerResults> getPlayerResults(@NotNull SearchData searchData){
+    public List<PlayerMatchData> getPlayerResults(@NotNull SearchData searchData){
         if(!searchData.getPlayerId().isValidId()){
             System.out.println("input steam id is not valid");
             return List.of();
         }
-        List<BasedPlayerResults> resultData = new ArrayList<>();
+        List<PlayerMatchData> resultData = new ArrayList<>();
         generalMissingMatchesAfterParse = new ArrayList<>();
 
         int start = -countOfMatchesToParse;
@@ -106,14 +109,38 @@ public class DataExtractorService {
                 listOfMatchResults = matchResultFilter.getFilteredMatchResults(listOfMatchResults, searchData);
             }
 
-            List<BasedPlayerResults> basedPlayerResultData = objectMapper.convertMatchRootToPlayerResultData(searchData.getPlayerId(), listOfMatchResults);
-            resultData.addAll(basedPlayerResultData);
+            List<PlayerMatchData> intermediateListOfResultData = fillPlayerMatchData(searchData, listOfMatchResults);
+
+            resultData.addAll(intermediateListOfResultData);
         }
 
         if(resultData.size() > searchData.getCount()){
             return resultData.subList(0, searchData.getCount());
         }
         return resultData;
+    }
+
+    /**
+     * Заполняет список из PlayerMatchData
+     * @param searchData запрос пользователя
+     * @param matchResultList список результатов матча
+     * @return список результатов матча для игрока
+     */
+    private List<PlayerMatchData> fillPlayerMatchData(SearchData searchData, List<MatchRootDTO> matchResultList){
+        List<PlayerMatchData> listOfPlayerMatchData = new ArrayList<>();
+        List<BasedPlayerResults> basedPlayerResultData = objectMapper.convertMatchRootToPlayerResultData(searchData.getPlayerId(), matchResultList);
+        if(basedPlayerResultData.size() != matchResultList.size()){
+            return List.of();
+        }
+        for(int index = 0; index < matchResultList.size(); index++){
+            listOfPlayerMatchData.add(
+                    new PlayerMatchData(
+                            searchData,
+                            matchResultList.get(index),
+                            basedPlayerResultData.get(index)
+                            ));
+        }
+        return listOfPlayerMatchData;
     }
 
     /**

@@ -6,7 +6,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Контейнер для TeamDTO
  */
 public class TeamsDTO {
+
+    /**
+     * Общая сводка информации по команде Red
+     */
     private final TeamDTO Red;
+
+    /**
+     * Общая сводка информации по команде Blue
+     */
     private final TeamDTO Blue;
 
     public TeamsDTO(

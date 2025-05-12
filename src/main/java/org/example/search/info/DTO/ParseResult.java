@@ -8,8 +8,15 @@ package org.example.search.info.DTO;
  */
 public class ParseResult<T> {
 
-    private final T resultData; // результат парсинга
-    private final Boolean isMissingData; // не удалось запарсить?
+    /**
+     * Результат парсинга
+     */
+    private final T resultData;
+
+    /**
+     * Не удалось запарсить?
+     */
+    private final Boolean isMissingData;
 
     public ParseResult(T resultData, Boolean isMissingData) {
         this.resultData = resultData;

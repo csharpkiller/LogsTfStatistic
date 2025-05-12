@@ -6,13 +6,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Информация о раунде в матче
  */
 public class RoundDTO {
-    private final long start_time; // дата начала в timestamp
-    private final String winner; // название команды которая победила
-    private final RoundTeamDTO team; // информацию о командах участвующих в раунде
-    private final RoundEventDTO[] events; // основные события раунда
-    private final RoundPlayerMapDTO players; // контейнер, связывающий SteamID игрока с его статистикой в этом раунде
-    private final String firstcap; // команда которая первой захватила контрольную точку в раунде
-    private final int length; // Длительность раунда в секундах .
+
+    /**
+     * Дата начала в timestamp
+     */
+    private final long start_time;
+
+    /**
+     * Название команды которая победила
+     */
+    private final String winner;
+
+    /**
+     * Информация о командах участвующих в раунде
+     */
+    private final RoundTeamDTO team;
+
+    /**
+     * Основные события раунда
+     */
+    private final RoundEventDTO[] events;
+
+    /**
+     * Контейнер, связывающий SteamID игрока с его статистикой в этом раунде
+     */
+    private final RoundPlayerMapDTO players;
+
+    /**
+     * Команда которая первой захватила контрольную точку в раунде
+     */
+    private final String firstcap;
+
+    /**
+     * Длительность раунда в секундах.
+     */
+    private final int length;
 
     public RoundDTO(
            @JsonProperty("start_time") long start_time,

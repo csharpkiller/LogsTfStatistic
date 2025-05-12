@@ -7,10 +7,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Чат матча
  */
 public class ChatDTO {
+    /**
+     * SteamId игрока в формате id64
+     */
+    private final String steamid;
 
-    private final String steamid; // steamId игрока
-    private final String name; // nickname игрока
-    private final String msg; // что написал в игре
+    /**
+     * Nickname игрока в матче
+     */
+    private final String name;
+
+    /**
+     * Что написал игрок в чате во время матча
+     */
+    private final String msg;
 
     public ChatDTO(
             @JsonProperty("steamid") String steamid,

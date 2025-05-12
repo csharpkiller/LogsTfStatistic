@@ -9,13 +9,41 @@ import java.util.List;
  * критерии по которым мы будем искать, фильтры
  */
 public class SearchData{
-    private final SteamID playerId; // id игрока для которого нужно вернуть результат
-    private final SearchRangeType searchRangeType; // тип поиска по range (сейчас только кол-во матчей)
-    private final Boolean isServerMeSearch; // матчи только с upploads with serveme?
-    private final List<String> ignoreTitles; // список игнорируемых Title's
-    private final List<GameHero> searchHeroes; // список персонажей по которым венруть результат
-    private final Integer count; // кол-во матчей которое нужно вернуть
-    private final List<GameMode> gameModes; // игровые режимы которые нужно вернуть
+
+    /**
+     * SteamId для которого нужно вернуть результат
+     */
+    private final SteamID playerId;
+
+    /**
+     * Тип поиска по range (сейчас только кол-во матчей)
+     */
+    private final SearchRangeType searchRangeType;
+
+    /**
+     * Матчи только с upploads with serveme?
+     */
+    private final Boolean isServerMeSearch;
+
+    /**
+     * Список игнорируемых Title's
+     */
+    private final List<String> ignoreTitles;
+
+    /**
+     * Список персонажей по которым венруть результат
+     */
+    private final List<GameHero> searchHeroes;
+
+    /**
+     * Кол-во матчей которое нужно вернуть
+     */
+    private final Integer count;
+
+    /**
+     * Игровые режимы которые нужно вернуть
+     */
+    private final List<GameMode> gameModes;
 
     public SearchData(SteamID playerId, SearchRangeType searchRangeType, Boolean isServerMeSearch, List<String> ignoreTitles, List<GameHero> searchHeroes, Integer count, List<GameMode> gameModes) {
         this.playerId = playerId;

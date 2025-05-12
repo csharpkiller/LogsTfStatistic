@@ -15,7 +15,11 @@ public class WeaponMap {
      * Ключ - название оружия, значение - статистика оружия
      */
     private Map<String, Weapon> weapons = new HashMap<>();
-    private boolean weapons_open = true; // lateinit realisation
+
+    /**
+     * lateinit realisation
+     */
+    private boolean weapons_open = true;
 
     /**
      * Для парсинга

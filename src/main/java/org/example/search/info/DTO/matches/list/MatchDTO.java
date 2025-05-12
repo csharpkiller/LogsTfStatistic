@@ -1,17 +1,40 @@
 package org.example.search.info.DTO.matches.list;
 
 public class MatchDTO {
-    // lateinit ;)
+
+    /**
+     * Id матча
+     */
     private int id;
     private boolean id_open = true;
+
+    /**
+     * Заголовок матча
+     */
     private String title;
     private boolean title_open = true;
+
+    /**
+     * Карта на которой происходил матч
+     */
     private String map;
     private boolean map_open = true;
+
+    /**
+     * Дата в timestamp
+     */
     private long date;
     private boolean date_open = true;
+
+    /**
+     * Кол-во просмотров результатов
+     */
     private int views;
     private boolean views_open = true;
+
+    /**
+     * Сколько игроков участвовало в матче (общее кол-во)
+     */
     private int players;
     private boolean players_open = true;
 

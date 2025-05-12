@@ -12,7 +12,10 @@ import java.util.List;
  */
 public class MatchExtractorService {
 
-    private final Integer dataError; // погрешность времени
+    /**
+     * Погрешность времени
+     */
+    private final Integer dataError;
 
     private final ApiLinkCreator apiLinkCreator;
     private final JsonFetcher jsonFetcher;

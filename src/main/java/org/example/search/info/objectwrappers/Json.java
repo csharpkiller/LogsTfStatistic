@@ -5,7 +5,10 @@ package org.example.search.info.objectwrappers;
  */
 public class Json {
 
-    private final String value; // Json String
+    /**
+     * Json в String
+     */
+    private final String value;
 
     public Json(String value) {
         this.value = value;

@@ -51,7 +51,6 @@ public class JsonFetcher {
                         responseCode == HttpURLConnection.HTTP_SEE_OTHER) {
 
                     String newUrl = connection.getHeaderField("Location");
-                    System.out.println("Перенаправление на: " + newUrl);
                     apiUrl = newUrl;
                     redirectCount++;
                     connection.disconnect();
@@ -59,16 +58,16 @@ public class JsonFetcher {
                 } else {
                     System.err.println("Ошибка ответа от сервера: " + responseCode);
                     connection.disconnect();
-                    return null;
+                    return new Json("");
                 }
 
             } catch (IOException e) {
                 System.err.println("Ошибка при получении JSON: " + e.getMessage());
-                return null;
+                return new Json("");
             }
         }
 
         System.err.println("Слишком много перенаправлений.");
-        return null;
+        return new Json("");
     }
 }

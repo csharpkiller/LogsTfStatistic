@@ -7,9 +7,21 @@ import java.util.regex.Pattern;
  * Обертка над steamId
  */
 public class SteamID {
-    private final String shortSteamID; // формат [U:1:27416040]
-    private final String steamID64;    // 76561197987681768
-    private final boolean isValidId;   // передали валидный id
+
+    /**
+     * Формат [U:1:27416040]
+     */
+    private final String shortSteamID;
+
+    /**
+     * Формат 76561197987681768
+     */
+    private final String steamID64;
+
+    /**
+     * Передали валидный id?
+     */
+    private final boolean isValidId;
 
     public SteamID(String input) {
         if (isValidSteamID64(input)) {

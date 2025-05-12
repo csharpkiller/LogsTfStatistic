@@ -10,8 +10,15 @@ import java.util.Map;
  */
 public class ApiLinkCreator {
 
-    private static final String BASED_WORKED_API_LINK_FOR_MATCHES = "http://logs.tf/api/v1/log"; // logs.tf api link без добавочных параметров
-    private final Map<String, String> parameters = new LinkedHashMap<>(); // добавочные параметры для @BASED_WORKED_API_LINK_FOR_MATCHES
+    /**
+     * logs.tf api link без добавочных параметров
+     */
+    private static final String BASED_WORKED_API_LINK_FOR_MATCHES = "http://logs.tf/api/v1/log";
+
+    /**
+     * Добавочные параметры для BASED_WORKED_API_LINK_FOR_MATCHES
+     */
+    private final Map<String, String> parameters = new LinkedHashMap<>();
 
     public ApiLinkCreator setTitle(String title) {
         parameters.put("title", title);

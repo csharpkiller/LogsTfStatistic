@@ -7,12 +7,36 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * В зависимости от эвента поле может быть пустое.
  */
 public class RoundEventDTO {
-    private final String type; // Тип эвента (charge, medic_death, pointcap etc.)
-    private final int time; // время после начала раунда когда случился эвент
-    private final String team; // название команды
-    private final String steamid; // steam id игрока
-    private final String killer; // steam id игрока, кто убил медика при эвенте "medic_death"
-    private final String medigun; // навзание medigun при эвенте "charge"
+
+    /**
+     * Тип эвента (charge, medic_death, pointcap etc.)
+     */
+    private final String type;
+
+    /**
+     * Время после начала раунда когда случился эвент
+     */
+    private final int time;
+
+    /**
+     * Название команды
+     */
+    private final String team;
+
+    /**
+     * Steam id игрока в формате id64
+     */
+    private final String steamid;
+
+    /**
+     * Steam id игрока в формате id64, кто убил медика при эвенте "medic_death"
+     */
+    private final String killer;
+
+    /**
+     * Навзание medigun при эвенте "charge"
+     */
+    private final String medigun;
 
     public RoundEventDTO(
             @JsonProperty("type") String type,

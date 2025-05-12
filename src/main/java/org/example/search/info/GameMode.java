@@ -7,7 +7,7 @@ public enum GameMode {
     SIXES(12),
     HIGHLANDER(18),
     ULTIDUO_BBAL(4),
-    NULL(-1); // TODO добавил для streamAPI, мб как-то по-другмоу можно решить
+    NULL(-1); // TODO добавил для streamAPI, мб как-то по-другому можно решить
 
     public final Integer playersCountInGameMode;
 

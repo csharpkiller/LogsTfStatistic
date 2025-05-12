@@ -6,11 +6,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Статистика оружия
  */
 public class Weapon {
-    private final int kills; // убито игроков
-    private final int dmg; // нанесенный урон
-    private final double avg_dmg; // средний урон
-    private final int shots; // кол-во выстрелов
-    private final int hits; // кол-во попаданий
+
+    /**
+     * Убито игроков
+     */
+    private final int kills;
+
+    /**
+     * Нанесенный урон
+     */
+    private final int dmg;
+
+    /**
+     * Средний урон
+     */
+    private final double avg_dmg;
+
+    /**
+     * Кол-во выстрелов
+     */
+    private final int shots;
+
+    /**
+     * Кол-во попаданий
+     */
+    private final int hits;
 
     public Weapon(
            @JsonProperty("kills") int kills,

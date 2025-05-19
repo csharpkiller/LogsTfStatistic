@@ -3,11 +3,14 @@ package org.example.search.info;
 import org.example.search.info.objectwrappers.SteamID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(MockitoExtension.class)
 class MatchExtractorServiceTest {
     private SteamID steamID;
     private final SearchRangeType searchRangeType = SearchRangeType.MATCH_COUNT;

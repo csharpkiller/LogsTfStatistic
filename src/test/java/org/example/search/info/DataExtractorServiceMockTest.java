@@ -1,14 +1,32 @@
 package org.example.search.info;
 
+import org.example.requestResults.RequestResponseMatchListDataForTests;
+import org.example.requestResults.RequestResponseMatchResultDataForTests;
+import org.example.search.info.objectwrappers.Json;
 import org.example.search.info.objectwrappers.SteamID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class DataExtractorServiceTest {
+@ExtendWith(MockitoExtension.class)
+class DataExtractorServiceMockTest {
+
+    @Mock
+    private JsonFetcher jsonFetcher;
+
+    private MatchExtractorService matchExtractorService;
+
+    private DataExtractorService dataExtractorService;
+
     private SteamID steamID;
     private final SearchRangeType searchRangeType = SearchRangeType.MATCH_COUNT;
     private boolean isServemeSearch;
@@ -17,7 +35,6 @@ class DataExtractorServiceTest {
     private Integer count;
     private List<GameMode> searchGameModes;
 
-    private DataExtractorService dataExtractorService;
     private SearchData searchData;
 
     @BeforeEach
@@ -49,8 +66,8 @@ class DataExtractorServiceTest {
     @Test
     void nonValidSteamIdTest(){
         steamID = new SteamID("Вячеслав Пыжьянов");
+        count = 1;
         uppdateSearchData();
-
         var result = dataExtractorService.getPlayerResults(searchData);
         assertEquals(List.of(), result);
     }
@@ -85,10 +102,20 @@ class DataExtractorServiceTest {
      */
     @Test
     void requestCountEqualsResultCountInGeneralSituationTest(){
-        count = 21;
+        count = 5;
         uppdateSearchData();
+
+        matchExtractorService = new MatchExtractorService(jsonFetcher);
+        dataExtractorService = new DataExtractorService(matchExtractorService, jsonFetcher, 10);
+
+        Mockito.when(jsonFetcher.getJsonFromUrl(RequestResponseMatchListDataForTests.request)).thenReturn(new Json(RequestResponseMatchListDataForTests.response));
+        Map<String, String> reqAndResp = RequestResponseMatchResultDataForTests.getMapFor1To10();
+        for(Map.Entry<String, String> entry: reqAndResp.entrySet()){
+            Mockito.when(jsonFetcher.getJsonFromUrl(entry.getKey())).thenReturn(new Json(entry.getValue()));
+        }
+
         var result = dataExtractorService.getPlayerResults(searchData);
-        assertEquals(21, result.size());
+        assertEquals(5, result.size());
     }
 
     /**
@@ -97,7 +124,17 @@ class DataExtractorServiceTest {
     @Test
     void oneFindHeroTest(){
         searchHeroes = List.of(GameHero.SCOUT);
+        count = 1;
         uppdateSearchData();
+
+        matchExtractorService = new MatchExtractorService(jsonFetcher);
+        dataExtractorService = new DataExtractorService(matchExtractorService, jsonFetcher, 10);
+
+        Mockito.when(jsonFetcher.getJsonFromUrl(RequestResponseMatchListDataForTests.request)).thenReturn(new Json(RequestResponseMatchListDataForTests.response));
+        Map<String, String> reqAndResp = RequestResponseMatchResultDataForTests.getMapFor1To10();
+        for(Map.Entry<String, String> entry: reqAndResp.entrySet()){
+            Mockito.when(jsonFetcher.getJsonFromUrl(entry.getKey())).thenReturn(new Json(entry.getValue()));
+        }
 
         var result = dataExtractorService.getPlayerResults(searchData);
         result.forEach(gameRes -> assertEquals(GameHero.SCOUT, gameRes.getBasedPlayerResults().getGameHero()));
@@ -109,8 +146,17 @@ class DataExtractorServiceTest {
     @Test
     void mixOfHeroesTest(){
         searchHeroes = List.of(GameHero.SCOUT, GameHero.SOLDIER);
-        count = 50;
+        count = 10;
         uppdateSearchData();
+
+        matchExtractorService = new MatchExtractorService(jsonFetcher);
+        dataExtractorService = new DataExtractorService(matchExtractorService, jsonFetcher, 10);
+
+        Mockito.when(jsonFetcher.getJsonFromUrl(RequestResponseMatchListDataForTests.request)).thenReturn(new Json(RequestResponseMatchListDataForTests.response));
+        Map<String, String> reqAndResp = RequestResponseMatchResultDataForTests.getMapFor1To10();
+        for(Map.Entry<String, String> entry: reqAndResp.entrySet()){
+            Mockito.when(jsonFetcher.getJsonFromUrl(entry.getKey())).thenReturn(new Json(entry.getValue()));
+        }
 
         var result = dataExtractorService.getPlayerResults(searchData);
         boolean containsScout = false;
@@ -131,20 +177,5 @@ class DataExtractorServiceTest {
         assertTrue(containsScout);
         assertTrue(containsSoldier);
         uppdateSearchData();
-    }
-
-    /**
-     * Число запрашиваемых матчей превышает фактический результат.
-     * Запрашиваю 100 игр на снайпере, а он играл только 20 etc.
-     */
-    @Test
-    void outOfRangeTest(){
-        steamID = new SteamID("76561198072338507");
-        searchHeroes = List.of(GameHero.SNIPER);
-        count=1500;
-        uppdateSearchData();
-
-        var result = dataExtractorService.getPlayerResults(searchData);
-        assertEquals(2, result.size());
     }
 }

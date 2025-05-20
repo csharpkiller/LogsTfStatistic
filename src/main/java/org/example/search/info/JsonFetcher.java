@@ -44,6 +44,7 @@ public class JsonFetcher {
 
                     reader.close();
                     connection.disconnect();
+                    System.out.println(apiUrl);
                     return new Json(response.toString());
 
                 } else if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP ||

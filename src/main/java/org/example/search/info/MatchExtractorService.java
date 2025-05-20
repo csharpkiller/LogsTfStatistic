@@ -28,6 +28,13 @@ public class MatchExtractorService {
         logsJsonParser = new LogsJsonParser();
     }
 
+    public MatchExtractorService(JsonFetcher jsonFetcher) {
+        dataError = 120;
+        apiLinkCreator = new ApiLinkCreator();
+        this.jsonFetcher = jsonFetcher;
+        logsJsonParser = new LogsJsonParser();
+    }
+
     /**
      * Возвращает отсортированный список матчей
      * @param offset смещение, logs.tf api value

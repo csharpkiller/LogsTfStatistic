@@ -75,6 +75,32 @@ public class DataExtractorService {
         countOfMaximumCheckMatches = 5000;
     }
 
+    public DataExtractorService(MatchExtractorService matchExtractorService){
+        matchResultFilter = new MatchResultFilter();
+        this.matchExtractorService = matchExtractorService;
+        objectMapper = new ObjectMapper();
+        generalMissingMatchesAfterParse = List.of();
+        jsonFetcher = new JsonFetcher();
+        apiLinkCreator = new ApiLinkCreator();
+        logsJsonParser = new LogsJsonParser();
+        countOfMatchesToParse = 10;
+        countOfPossibleErrors = 3;
+        countOfMaximumCheckMatches = 5000;
+    }
+
+    public DataExtractorService(MatchExtractorService matchExtractorService, JsonFetcher jsonFetcher, int countOfMatchesToParse){
+        matchResultFilter = new MatchResultFilter();
+        this.matchExtractorService = matchExtractorService;
+        objectMapper = new ObjectMapper();
+        generalMissingMatchesAfterParse = List.of();
+        this.jsonFetcher = jsonFetcher;
+        apiLinkCreator = new ApiLinkCreator();
+        logsJsonParser = new LogsJsonParser();
+        this.countOfMatchesToParse = countOfMatchesToParse;
+        countOfPossibleErrors = 3;
+        countOfMaximumCheckMatches = 5000;
+    }
+
     /**
      * Обрабатывает запрос пользователя и возвращает результаты матчей.
      * @param searchData user input
